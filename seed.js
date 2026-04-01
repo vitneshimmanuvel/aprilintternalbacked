@@ -34,14 +34,12 @@ async function seed() {
     await client.query(cleanSchema);
     console.log('✅ Schema created');
 
-    // 3. Create users with proper bcryptjs hashes
+    // 3. Create admin user only
     const users = [
-      { name: 'System Admin',    email: 'admin@leadflow.com',   password: 'Admin@123',   role: 'admin'   },
-      { name: 'Rahul Manager',   email: 'manager@leadflow.com', password: 'Manager@123', role: 'manager' },
-      { name: 'Priya Employee',  email: 'employee@leadflow.com', password: 'Employee@123', role: 'visitor' },
+      { name: 'System Admin', email: 'admin@leadflow.com', password: 'Admin@123', role: 'admin' },
     ];
 
-    console.log('\n👤 Creating users...');
+    console.log('\n👤 Creating admin user...');
     for (const u of users) {
       const hash = await bcrypt.hash(u.password, 10);
       await client.query(
@@ -56,8 +54,6 @@ async function seed() {
     console.log('  │ Role     │ Email                   │ Password     │');
     console.log('  ├──────────┼─────────────────────────┼──────────────┤');
     console.log('  │ Admin    │ admin@leadflow.com      │ Admin@123    │');
-    console.log('  │ Manager  │ manager@leadflow.com    │ Manager@123  │');
-    console.log('  │ Employee │ employee@leadflow.com   │ Employee@123 │');
     console.log('  └──────────┴─────────────────────────┴──────────────┘\n');
 
   } catch (err) {

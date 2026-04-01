@@ -79,9 +79,15 @@ CREATE TABLE reminders (
   stage VARCHAR(50) NOT NULL,
   title VARCHAR(255) NOT NULL,
   description TEXT,
+  type VARCHAR(50) DEFAULT 'general',
+  recurrence VARCHAR(50) DEFAULT 'none',
   remind_at TIMESTAMP WITH TIME ZONE NOT NULL,
   is_completed BOOLEAN DEFAULT false,
   completed_at TIMESTAMP WITH TIME ZONE,
+  completion_status VARCHAR(50),
+  completion_note TEXT,
+  is_notified BOOLEAN DEFAULT false,
+  last_notified_at TIMESTAMP WITH TIME ZONE,
   created_at TIMESTAMP WITH TIME ZONE DEFAULT NOW()
 );
 

@@ -20,8 +20,13 @@ cron.schedule('* * * * *', async () => {
       JOIN users u ON r.user_id = u.id
       LEFT JOIN leads l ON r.lead_id = l.id
       WHERE r.is_completed = false
-        AND r.is_notified = false
-        AND r.remind_at <= NOW() + INTERVAL '15 minutes'
+        AND (
+          (r.is_notified = false AND r.remind_at <= NOW() + INTERVAL '15 minutes')
+          OR 
+          (r.is_notified = true AND r.recurrence = '30_mins' AND (r.last_notified_at IS NULL OR r.last_notified_at <= NOW() - INTERVAL '30 minutes'))
+          OR 
+          (r.is_notified = true AND r.recurrence = '1_hour' AND (r.last_notified_at IS NULL OR r.last_notified_at <= NOW() - INTERVAL '1 hour'))
+        )
     `;
 
     const { rows } = await pool.query(query);
@@ -34,8 +39,8 @@ cron.schedule('* * * * *', async () => {
         ? `Lead: ${reminder.lead_title}\n${reminder.description || ''}`
         : `${reminder.description || 'You have an upcoming reminder.'}`;
 
-      // Mark as notified so we don't send again
-      await pool.query('UPDATE reminders SET is_notified = true WHERE id = $1', [reminder.id]);
+      // Mark as notified and record the time
+      await pool.query('UPDATE reminders SET is_notified = true, last_notified_at = NOW() WHERE id = $1', [reminder.id]);
 
       // If user has token, send push
       if (reminder.fcm_token) {

@@ -23,9 +23,9 @@ const getMyReminders = async (req, res, next) => {
        FROM reminders r
        JOIN leads l ON r.lead_id = l.id
        JOIN users u ON r.user_id = u.id
-       WHERE r.user_id = $1 AND r.is_completed = false
-       ORDER BY r.remind_at ASC
-       LIMIT 50`,
+       WHERE r.user_id = $1
+       ORDER BY r.remind_at DESC
+       LIMIT 100`,
       [req.user.id]
     );
     res.json({ reminders: result.rows });
@@ -97,19 +97,22 @@ const completeReminder = async (req, res, next) => {
     if (current.rows[0].user_id !== req.user.id && req.user.role !== 'admin')
       return res.status(403).json({ message: 'Not allowed' });
 
+    const { status, note } = req.body;
+    const finalStatus = status || 'completed';
+
     await client.query(
-      `UPDATE reminders SET is_completed = true, completed_at = NOW() WHERE id = $1`,
-      [id]
+      `UPDATE reminders SET is_completed = true, completed_at = NOW(), completion_status = $1, completion_note = $2 WHERE id = $3`,
+      [finalStatus, note || null, id]
     );
 
     await client.query(
       `INSERT INTO lead_history (lead_id, user_id, action, details)
        VALUES ($1, $2, 'reminder_completed', $3)`,
-      [current.rows[0].lead_id, req.user.id, JSON.stringify({ reminder_title: current.rows[0].title })]
+      [current.rows[0].lead_id, req.user.id, JSON.stringify({ reminder_title: current.rows[0].title, status: finalStatus, note: note || '' })]
     );
 
-    // Handle recurrence
-    if (current.rows[0].recurrence && current.rows[0].recurrence !== 'none') {
+    // Handle recurrence (only for long-term repeating)
+    if (current.rows[0].recurrence && !['none', '30_mins', '1_hour'].includes(current.rows[0].recurrence)) {
       let nextDate = new Date(current.rows[0].remind_at);
       if (current.rows[0].recurrence === 'daily') nextDate.setDate(nextDate.getDate() + 1);
       else if (current.rows[0].recurrence === 'weekly') nextDate.setDate(nextDate.getDate() + 7);
