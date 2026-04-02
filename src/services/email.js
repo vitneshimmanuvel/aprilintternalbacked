@@ -20,7 +20,7 @@ const sendEmail = async (to, subject, text, html = '') => {
 
   try {
     const mailOptions = {
-      from: `"LeadFlow CRM" <${process.env.SMTP_EMAIL}>`,
+      from: `"Lead Management" <${process.env.SMTP_EMAIL}>`,
       to,
       subject,
       text,
