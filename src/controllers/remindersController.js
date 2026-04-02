@@ -73,6 +73,16 @@ const createReminder = async (req, res, next) => {
 
     await client.query('COMMIT');
 
+    // Notify Assignee that a reminder was scheduled
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(
+      leadCheck.rows[0].assigned_to, 
+      leadId, 
+      `New Reminder Scheduled`, 
+      `A new reminder was scheduled for your lead.`, 
+      `<strong>Title:</strong> ${title.trim()}<br><strong>Time:</strong> ${new Date(remind_at).toLocaleString()}`
+    );
+
     const reminder = await pool.query(
       `SELECT r.*, u.name as user_name FROM reminders r JOIN users u ON r.user_id = u.id WHERE r.id = $1`,
       [result.rows[0].id]

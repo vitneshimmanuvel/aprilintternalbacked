@@ -155,6 +155,16 @@ const createVisit = async (req, res, next) => {
 
     await client.query('COMMIT');
 
+    // Notify Assignee
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(
+      leadCheck.rows[0].assigned_to, 
+      leadId, 
+      `New Visit Logged`, 
+      `A new visit was logged for your lead.`, 
+      `<strong>Location:</strong> ${location.trim()}<br><strong>Date:</strong> ${new Date(visit_date).toLocaleString()}<br><strong>Outcome:</strong> ${outcome || 'Pending'}`
+    );
+
     // Fetch full visit with participants
     const full = await pool.query(
       `SELECT v.*, u.name as created_by_name, u.role as created_by_role,

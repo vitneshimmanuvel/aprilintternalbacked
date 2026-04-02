@@ -67,7 +67,6 @@ router.get('/', async (req, res) => {
           <p>You have an upcoming reminder scheduled.</p>
           <p><strong>Reminder:</strong> ${reminder.title}</p>
           <p><strong>Details:</strong><br/>${body.replace(/\n/g, '<br/>')}</p>
-          <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${reminder.lead_id}">Click to View Reminder</a></p>
         `;
         sendEmail(reminder.email, `LeadFlow Reminder: ${reminder.title}`, '', emailContent);
       }

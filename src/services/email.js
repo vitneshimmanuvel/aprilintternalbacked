@@ -50,7 +50,6 @@ const sendActionEmail = async (userId, leadId, subject, title, bodyHtml) => {
         <div style="background:#f4f4f4;padding:10px;margin-bottom:10px;border-radius:5px;">
            ${bodyHtml}
         </div>
-        <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${leadId}">Click here to view Lead</a></p>
       `;
       await sendEmail(assignee.email, subject, '', emailContent);
     }
