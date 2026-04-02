@@ -22,7 +22,7 @@ router.get('/', async (req, res) => {
     const now = new Date();
     // find reminders due in the next 15 minutes, or that are already overdue, that haven't been notified yet.
     const query = `
-      SELECT r.*, u.fcm_token, u.name as user_name, l.title as lead_title
+      SELECT r.*, u.fcm_token, u.name as user_name, u.email, l.title as lead_title
       FROM reminders r
       JOIN users u ON r.user_id = u.id
       LEFT JOIN leads l ON r.lead_id = l.id
@@ -56,6 +56,20 @@ router.get('/', async (req, res) => {
           url: `/leads/${reminder.lead_id}`
         });
         sentCount++;
+      }
+
+      // Send ONE-TIME email only on the first initial reminder notification
+      if (reminder.is_notified === false && reminder.email) {
+        const { sendEmail } = require('../services/email');
+        const emailContent = `
+          <h2>LeadFlow Reminder 🔔</h2>
+          <p>Hello ${reminder.user_name},</p>
+          <p>You have an upcoming reminder scheduled.</p>
+          <p><strong>Reminder:</strong> ${reminder.title}</p>
+          <p><strong>Details:</strong><br/>${body.replace(/\n/g, '<br/>')}</p>
+          <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${reminder.lead_id}">Click to View Reminder</a></p>
+        `;
+        sendEmail(reminder.email, `LeadFlow Reminder: ${reminder.title}`, '', emailContent);
       }
     }
 

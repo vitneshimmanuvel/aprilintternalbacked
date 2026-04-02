@@ -230,6 +230,29 @@ const moveStage = async (req, res, next) => {
     await logHistory(client, id, req.user.id, 'stage_changed', { from: oldStage, to: stage }, 'stage', oldStage, stage);
     await client.query('COMMIT');
 
+    // Send Email to the assigned user asynchronously
+    try {
+      const assigneeResult = await pool.query('SELECT email, name FROM users WHERE id = $1', [result.rows[0].assigned_to]);
+      const assignee = assigneeResult.rows[0];
+      if (assignee && assignee.email) {
+        const { sendEmail } = require('../services/email');
+        const emailContent = `
+          <h2>Lead Stage Updated</h2>
+          <p>Hello ${assignee.name},</p>
+          <p>The lead <strong>"${result.rows[0].title}"</strong> has been moved to a new stage.</p>
+          <ul>
+            <li><strong>From:</strong> ${oldStage}</li>
+            <li><strong>To:</strong> ${stage}</li>
+            <li><strong>Updated By:</strong> ${req.user.name || 'A team member'}</li>
+          </ul>
+          <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${id}">Click here to view Lead</a></p>
+        `;
+        sendEmail(assignee.email, `Lead Update: ${result.rows[0].title} moved to ${stage}`, '', emailContent);
+      }
+    } catch (err) {
+      console.error('Failed to send stage change email:', err);
+    }
+
     res.json({ lead: result.rows[0], from: oldStage, to: stage });
   } catch (err) {
     await client.query('ROLLBACK');
