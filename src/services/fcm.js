@@ -37,7 +37,15 @@ const sendPushNotification = async (fcmToken, title, body, data = {}) => {
   const message = {
     notification: { title, body },
     data,
-    token: fcmToken
+    token: fcmToken,
+    android: {
+      priority: 'high',
+      notification: { sound: 'default' }
+    },
+    webpush: {
+      headers: { Urgency: 'high' },
+      notification: { requireInteraction: true }
+    }
   };
 
   try {
