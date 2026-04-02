@@ -56,6 +56,10 @@ const addNote = async (req, res, next) => {
     );
 
     await client.query('COMMIT');
+    
+    // Notify Assignee
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(leadCheck.rows[0].assigned_to, leadId, `New Note Added on Lead`, `A new note was added to the lead.`, `Note from ${req.user.name || 'someone'}:<br><em>"${content.trim()}"</em>`);
 
     const note = await pool.query(
       `SELECT ln.*, u.name as user_name, u.role as user_role

@@ -140,6 +140,10 @@ const createLead = async (req, res, next) => {
 
     await client.query('COMMIT');
 
+    // Notify Assignee
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(lead.assigned_to, lead.id, `New Lead Assigned: ${lead.title}`, `You have been assigned to a new lead: <strong>${lead.title}</strong>`, `Client: ${lead.client_name}<br>Description: ${lead.description || 'No description'}`);
+
     const full = await pool.query(
       `SELECT l.*, u1.name as assigned_to_name, u2.name as created_by_name
        FROM leads l LEFT JOIN users u1 ON l.assigned_to = u1.id LEFT JOIN users u2 ON l.created_by = u2.id
@@ -182,7 +186,10 @@ const updateLead = async (req, res, next) => {
       }
     }
 
-    if (updates.length === 0) return res.status(400).json({ message: 'No changes detected' });
+    if (updates.length === 0) {
+      await client.query('ROLLBACK');
+      return res.json({ lead });
+    }
 
     params.push(id);
     const result = await client.query(
@@ -191,6 +198,11 @@ const updateLead = async (req, res, next) => {
     );
 
     await client.query('COMMIT');
+    
+    // Notify Assignee
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(result.rows[0].assigned_to, id, `Lead Updated: ${result.rows[0].title}`, `The lead <strong>${result.rows[0].title}</strong> has been updated.`, `Fields modified: ${updates.map(u => u.split(' =')[0]).join(', ')}`);
+
     res.json({ lead: result.rows[0] });
   } catch (err) {
     await client.query('ROLLBACK');
@@ -230,28 +242,9 @@ const moveStage = async (req, res, next) => {
     await logHistory(client, id, req.user.id, 'stage_changed', { from: oldStage, to: stage }, 'stage', oldStage, stage);
     await client.query('COMMIT');
 
-    // Send Email to the assigned user asynchronously
-    try {
-      const assigneeResult = await pool.query('SELECT email, name FROM users WHERE id = $1', [result.rows[0].assigned_to]);
-      const assignee = assigneeResult.rows[0];
-      if (assignee && assignee.email) {
-        const { sendEmail } = require('../services/email');
-        const emailContent = `
-          <h2>Lead Stage Updated</h2>
-          <p>Hello ${assignee.name},</p>
-          <p>The lead <strong>"${result.rows[0].title}"</strong> has been moved to a new stage.</p>
-          <ul>
-            <li><strong>From:</strong> ${oldStage}</li>
-            <li><strong>To:</strong> ${stage}</li>
-            <li><strong>Updated By:</strong> ${req.user.name || 'A team member'}</li>
-          </ul>
-          <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${id}">Click here to view Lead</a></p>
-        `;
-        sendEmail(assignee.email, `Lead Update: ${result.rows[0].title} moved to ${stage}`, '', emailContent);
-      }
-    } catch (err) {
-      console.error('Failed to send stage change email:', err);
-    }
+    // Notify Assignee
+    const { sendActionEmail } = require('../services/email');
+    sendActionEmail(result.rows[0].assigned_to, id, `Lead Updated: ${result.rows[0].title} moved to ${stage}`, `The lead <strong>${result.rows[0].title}</strong> has been moved to a new stage.`, `From: ${oldStage}<br>To: ${stage}`);
 
     res.json({ lead: result.rows[0], from: oldStage, to: stage });
   } catch (err) {

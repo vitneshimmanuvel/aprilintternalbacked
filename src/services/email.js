@@ -36,6 +36,30 @@ const sendEmail = async (to, subject, text, html = '') => {
   }
 };
 
+const sendActionEmail = async (userId, leadId, subject, title, bodyHtml) => {
+  try {
+    const { Pool } = require('pg');
+    const pool = new Pool({ connectionString: process.env.DATABASE_URL });
+    const assigneeResult = await pool.query('SELECT email, name FROM users WHERE id = $1', [userId]);
+    const assignee = assigneeResult.rows[0];
+    if (assignee && assignee.email) {
+      const emailContent = `
+        <h2>LeadFlow CRM Notification</h2>
+        <p>Hello ${assignee.name},</p>
+        <p>${title}</p>
+        <div style="background:#f4f4f4;padding:10px;margin-bottom:10px;border-radius:5px;">
+           ${bodyHtml}
+        </div>
+        <p><a href="${process.env.FRONTEND_URL || 'https://aprilintternalbacked.vercel.app'}/leads/${leadId}">Click here to view Lead</a></p>
+      `;
+      await sendEmail(assignee.email, subject, '', emailContent);
+    }
+  } catch (err) {
+    console.error('Failed to send action email:', err);
+  }
+};
+
 module.exports = {
-  sendEmail
+  sendEmail,
+  sendActionEmail
 };
