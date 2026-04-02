@@ -22,12 +22,6 @@ router.post('/auth/login', authCtrl.login);
 router.get('/auth/me', authenticate, authCtrl.getMe);
 router.put('/auth/change-password', authenticate, authCtrl.changePassword);
 
-router.get('/test-email', async (req, res) => {
-  const { sendEmail } = require('../services/email');
-  const success = await sendEmail('vitneshimmanuvel@gmail.com', 'Vercel Deployment Test', 'This is a test from the Vercel backend to prove environment variables work!');
-  res.json({ success });
-});
-
 // Users
 router.put('/users/me/fcm-token', authenticate, usersCtrl.updateFcmToken);
 router.get('/users/active', authenticate, usersCtrl.getActiveUsers);
