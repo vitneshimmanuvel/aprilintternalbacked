@@ -11,8 +11,8 @@ const visitsCtrl = require('../controllers/visitsController');
 const settingsCtrl = require('../controllers/settingsController');
 const cronRoute = require('./cron');
 
-// Mount Cron route (Vercel invokes this)
-router.use('/cron', cronRoute);
+// Mount Cron route (cron-job.org invokes this)
+router.use('/trigger-reminders', cronRoute);
 
 // Stats (admin only)
 router.get('/stats/today', authenticate, requireAdmin, statsCtrl.getTodayStats);
