@@ -9,6 +9,10 @@ const remindersCtrl = require('../controllers/remindersController');
 const statsCtrl = require('../controllers/statsController');
 const visitsCtrl = require('../controllers/visitsController');
 const settingsCtrl = require('../controllers/settingsController');
+const cronRoute = require('./cron');
+
+// Mount Cron route (Vercel invokes this)
+router.use('/cron', cronRoute);
 
 // Stats (admin only)
 router.get('/stats/today', authenticate, requireAdmin, statsCtrl.getTodayStats);
