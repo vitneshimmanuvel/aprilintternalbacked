@@ -1,6 +1,6 @@
 const express = require('express');
 const router = express.Router();
-const { authenticate, requireAdmin } = require('../middleware/auth');
+const { authenticate, requireAdmin, requireManagerOrAdmin } = require('../middleware/auth');
 const authCtrl = require('../controllers/authController');
 const usersCtrl = require('../controllers/usersController');
 const leadsCtrl = require('../controllers/leadsController');
@@ -15,7 +15,7 @@ const cronRoute = require('./cron');
 router.use('/trigger-reminders', cronRoute);
 
 // Stats (admin only)
-router.get('/stats/today', authenticate, requireAdmin, statsCtrl.getTodayStats);
+router.get('/stats/today', authenticate, requireManagerOrAdmin, statsCtrl.getTodayStats);
 
 // Auth
 router.post('/auth/login', authCtrl.login);
@@ -25,9 +25,9 @@ router.put('/auth/change-password', authenticate, authCtrl.changePassword);
 // Users
 router.put('/users/me/fcm-token', authenticate, usersCtrl.updateFcmToken);
 router.get('/users/active', authenticate, usersCtrl.getActiveUsers);
-router.get('/users', authenticate, requireAdmin, usersCtrl.getUsers);
-router.post('/users', authenticate, requireAdmin, usersCtrl.createUser);
-router.put('/users/:id', authenticate, requireAdmin, usersCtrl.updateUser);
+router.get('/users', authenticate, requireManagerOrAdmin, usersCtrl.getUsers);
+router.post('/users', authenticate, requireManagerOrAdmin, usersCtrl.createUser);
+router.put('/users/:id', authenticate, requireManagerOrAdmin, usersCtrl.updateUser);
 router.delete('/users/:id', authenticate, requireAdmin, usersCtrl.deleteUser);
 
 // Leads (all authenticated)
@@ -50,13 +50,13 @@ router.put('/reminders/:id/complete', authenticate, remindersCtrl.completeRemind
 router.delete('/reminders/:id', authenticate, remindersCtrl.deleteReminder);
 
 // Visits / Travel
-router.get('/visits/all', authenticate, requireAdmin, visitsCtrl.getAllVisits);
+router.get('/visits/all', authenticate, requireManagerOrAdmin, visitsCtrl.getAllVisits);
 router.get('/leads/:leadId/visits', authenticate, visitsCtrl.getVisits);
 router.post('/leads/:leadId/visits', authenticate, visitsCtrl.createVisit);
 router.put('/visits/:id', authenticate, visitsCtrl.updateVisit);
 
 // Settings
 router.get('/settings', authenticate, settingsCtrl.getSettings);
-router.put('/settings', authenticate, requireAdmin, settingsCtrl.updateSettings);
+router.put('/settings', authenticate, requireManagerOrAdmin, settingsCtrl.updateSettings);
 
 module.exports = router;

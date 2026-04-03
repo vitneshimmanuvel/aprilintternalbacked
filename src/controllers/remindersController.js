@@ -54,10 +54,12 @@ const createReminder = async (req, res, next) => {
     const reminderStage = stage || leadCheck.rows[0].stage;
     const reminderType = type || 'general';
 
+    const targetUserId = leadCheck.rows[0].assigned_to || req.user.id;
+
     const result = await client.query(
       `INSERT INTO reminders (lead_id, user_id, stage, title, description, remind_at, type, recurrence)
        VALUES ($1,$2,$3,$4,$5,$6,$7,$8) RETURNING *`,
-      [leadId, req.user.id, reminderStage, title.trim(), description || null, remind_at, reminderType, recurrence || 'none']
+      [leadId, targetUserId, reminderStage, title.trim(), description || null, remind_at, reminderType, recurrence || 'none']
     );
 
     await client.query(
