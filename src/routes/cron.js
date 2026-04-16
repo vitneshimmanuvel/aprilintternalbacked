@@ -1,12 +1,7 @@
 const express = require('express');
 const router = express.Router();
-const { Pool } = require('pg');
+const pool = require('../config/db');
 const { sendPushNotification } = require('../services/fcm');
-
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: { rejectUnauthorized: false }
-});
 
 router.get('/', async (req, res) => {
   // Optional: Add simple security to prevent unauthorized triggering
