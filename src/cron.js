@@ -8,10 +8,9 @@ const pool = new Pool({
   ssl: { rejectUnauthorized: false }
 });
 
-// Run every minute
-cron.schedule('* * * * *', async () => {
+// Run every 5 minutes (reduced from 1 min to save Neon compute)
+cron.schedule('*/5 * * * *', async () => {
   try {
-    console.log('Running reminder cron check...');
     const now = new Date();
     // find reminders due in the next 15 minutes, or that are already overdue, that haven't been notified yet.
     const query = `
