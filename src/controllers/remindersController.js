@@ -62,14 +62,10 @@ const createReminder = async (req, res, next) => {
       return res.status(404).json({ message: 'Lead not found or access denied' });
     }
 
-    if (req.user.role === 'visitor' && leadCheck.rows[0].assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });
-    }
-
     const reminderStage = stage || leadCheck.rows[0].stage;
     const reminderType = type || 'general';
 
-    const targetUserId = leadCheck.rows[0].assigned_to || req.user.id;
+    const targetUserId = req.user.id;
 
     const result = await client.query(
       `INSERT INTO reminders (lead_id, user_id, stage, title, description, remind_at, type, recurrence)
@@ -90,15 +86,26 @@ const createReminder = async (req, res, next) => {
 
     await client.query('COMMIT');
 
-    // Notify Assignee that a reminder was scheduled
+    // Notify Creator that a reminder was scheduled
     const { sendActionEmail } = require('../services/email');
     sendActionEmail(
-      leadCheck.rows[0].assigned_to, 
+      req.user.id, 
       leadId, 
       `New Reminder Scheduled`, 
-      `A new reminder was scheduled for your lead.`, 
+      `A new reminder was scheduled.`, 
       `<strong>Title:</strong> ${title.trim()}<br><strong>Time:</strong> ${new Date(remind_at).toLocaleString()}`
     );
+
+    // Also notify the assignee if they are different
+    if (leadCheck.rows[0].assigned_to && leadCheck.rows[0].assigned_to !== req.user.id) {
+      sendActionEmail(
+        leadCheck.rows[0].assigned_to, 
+        leadId, 
+        `New Reminder Scheduled`, 
+        `A new reminder was scheduled for your lead.`, 
+        `<strong>Title:</strong> ${title.trim()}<br><strong>Time:</strong> ${new Date(remind_at).toLocaleString()}`
+      );
+    }
 
     const reminder = await pool.query(
       `SELECT r.*, u.name as user_name FROM reminders r JOIN users u ON r.user_id = u.id WHERE r.id = $1`,

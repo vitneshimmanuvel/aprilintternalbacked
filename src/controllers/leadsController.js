@@ -9,9 +9,9 @@ const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) =
   params.push(boardId);
   paramIdx++;
 
-  if (userRole === 'visitor') {
+  if (query.assigned_to) {
     baseQuery += ` AND l.assigned_to = $${paramIdx}`;
-    params.push(userId);
+    params.push(query.assigned_to);
     paramIdx++;
   }
 
@@ -65,9 +65,7 @@ const createLead = async (req, res, next) => {
     let finalTitle = title ? title.trim() : 'Unnamed Lead';
     let finalClientName = client_name ? client_name.trim() : 'Unknown Client';
 
-    let finalAssignedTo = assigned_to;
-    if (req.user.role === 'visitor') finalAssignedTo = req.user.id; // visitors can only assign to self
-    else if (!finalAssignedTo) finalAssignedTo = null; // unassigned
+    let finalAssignedTo = assigned_to || null;
 
     let firstStage = 'meeting';
     const settingsResult = await client.query("SELECT value FROM settings WHERE board_id = $1 AND key = 'stages'", [req.boardId]);
@@ -141,9 +139,7 @@ const getLead = async (req, res, next) => {
     if (!result.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
     const lead = result.rows[0];
 
-    if (req.user.role === 'visitor' && lead.assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
+    // Removed visitor access block so they can see the lead details
 
     const historyRes = await pool.query(
       `SELECT h.*, u.name as user_name 
@@ -193,12 +189,8 @@ const updateLead = async (req, res, next) => {
     const current = await client.query('SELECT * FROM leads WHERE id = $1 AND board_id = $2', [id, req.boardId]);
     if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
 
-    if (req.user.role === 'visitor' && current.rows[0].assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
-
+    // Removed visitor update restriction so they can edit leads and re-assign
     let finalAssignedTo = assigned_to;
-    if (req.user.role === 'visitor') finalAssignedTo = current.rows[0].assigned_to;
 
     const updates = [];
     const changedFields = [];
@@ -269,9 +261,7 @@ const moveStage = async (req, res, next) => {
     const current = await client.query('SELECT * FROM leads WHERE id = $1 AND board_id = $2', [id, req.boardId]);
     if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
 
-    if (req.user.role === 'visitor' && current.rows[0].assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied' });
-    }
+    // Removed visitor restriction so they can move stages
 
     const oldStage = current.rows[0].stage;
     if (oldStage === new_stage) {

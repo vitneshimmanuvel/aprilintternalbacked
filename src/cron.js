@@ -14,10 +14,11 @@ cron.schedule('*/5 * * * *', async () => {
     const now = new Date();
     // find reminders due in the next 15 minutes, or that are already overdue, that haven't been notified yet.
     const query = `
-      SELECT r.*, u.fcm_token, u.name as user_name, l.title as lead_title
+      SELECT r.*, u.fcm_token, u.name as user_name, l.title as lead_title, u2.fcm_token as assignee_fcm, l.assigned_to
       FROM reminders r
       JOIN users u ON r.user_id = u.id
       LEFT JOIN leads l ON r.lead_id = l.id
+      LEFT JOIN users u2 ON l.assigned_to = u2.id
       WHERE r.is_completed = false
         AND (
           (r.is_notified = false AND r.remind_at <= NOW() + INTERVAL '15 minutes')
@@ -31,7 +32,7 @@ cron.schedule('*/5 * * * *', async () => {
     const { rows } = await pool.query(query);
 
     for (let reminder of rows) {
-      console.log(`Sending reminder ${reminder.id} to user ${reminder.user_id}`);
+      console.log(`Sending reminder ${reminder.id} to user ${reminder.user_id} and assignee ${reminder.assigned_to}`);
       
       const title = `Upcoming Reminder: ${reminder.title}`;
       const body = reminder.lead_title 
@@ -44,6 +45,13 @@ cron.schedule('*/5 * * * *', async () => {
       // If user has token, send push
       if (reminder.fcm_token) {
         await sendPushNotification(reminder.fcm_token, title, body, {
+          url: `/leads/${reminder.lead_id}`
+        });
+      }
+
+      // Also notify the assignee if they are different from the creator
+      if (reminder.assignee_fcm && reminder.assigned_to !== reminder.user_id) {
+        await sendPushNotification(reminder.assignee_fcm, title, body, {
           url: `/leads/${reminder.lead_id}`
         });
       }
