@@ -1,8 +1,24 @@
 const bcrypt = require('bcryptjs');
 const pool = require('../config/db');
 
-// GET /api/users - Admin: list all users
+// GET /api/users - Admin: list users in current board
 const getUsers = async (req, res, next) => {
+  try {
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at
+      FROM users u
+      JOIN board_users bu ON bu.user_id = u.id
+      WHERE bu.board_id = $1
+      ORDER BY u.created_at DESC
+    `, [req.boardId]);
+    res.json({ users: result.rows });
+  } catch (err) {
+    next(err);
+  }
+};
+
+// GET /api/users/all - Admin: list ALL users globally (for board assignment)
+const getAllUsers = async (req, res, next) => {
   try {
     const result = await pool.query(
       'SELECT id, name, email, role, is_active, created_at FROM users ORDER BY created_at DESC'
@@ -13,21 +29,27 @@ const getUsers = async (req, res, next) => {
   }
 };
 
-// GET /api/users/active - All: list active users for assignment
+// GET /api/users/active - All: list active users for assignment in current board
 const getActiveUsers = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      'SELECT id, name FROM users WHERE is_active = true ORDER BY name ASC'
-    );
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.role, u.is_active 
+      FROM users u
+      JOIN board_users bu ON bu.user_id = u.id
+      WHERE u.is_active = true AND bu.board_id = $1
+      ORDER BY u.name ASC
+    `, [req.boardId]);
     res.json({ users: result.rows });
   } catch (err) {
     next(err);
   }
 };
 
-// POST /api/users - Admin: create user
+// POST /api/users - Admin: create user and add to current board
 const createUser = async (req, res, next) => {
+  const client = await pool.connect();
   try {
+    await client.query('BEGIN');
     const { name, email, password, role } = req.body;
     if (!name || !email || !password || !role)
       return res.status(400).json({ message: 'All fields are required' });
@@ -36,19 +58,29 @@ const createUser = async (req, res, next) => {
     if (password.length < 6)
       return res.status(400).json({ message: 'Password must be at least 6 characters' });
 
-    const existing = await pool.query('SELECT id FROM users WHERE email = $1', [email.toLowerCase()]);
+    const existing = await client.query('SELECT id FROM users WHERE email = $1', [email.toLowerCase()]);
     if (existing.rows[0])
       return res.status(409).json({ message: 'Email already in use' });
 
     const hash = await bcrypt.hash(password, 10);
-    const result = await pool.query(
+    const result = await client.query(
       'INSERT INTO users (name, email, password_hash, role) VALUES ($1, $2, $3, $4) RETURNING id, name, email, role, is_active, created_at',
       [name.trim(), email.toLowerCase().trim(), hash, role]
     );
 
+    // Auto-add to the current board
+    await client.query(
+      'INSERT INTO board_users (board_id, user_id, role) VALUES ($1, $2, $3)',
+      [req.boardId, result.rows[0].id, 'member']
+    );
+
+    await client.query('COMMIT');
     res.status(201).json({ user: result.rows[0] });
   } catch (err) {
+    await client.query('ROLLBACK');
     next(err);
+  } finally {
+    client.release();
   }
 };
 
@@ -128,4 +160,4 @@ const updateFcmToken = async (req, res, next) => {
   }
 };
 
-module.exports = { getUsers, createUser, updateUser, deleteUser, getActiveUsers, updateFcmToken };
+module.exports = { getUsers, getAllUsers, createUser, updateUser, deleteUser, getActiveUsers, updateFcmToken };

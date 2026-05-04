@@ -12,7 +12,7 @@ const DEFAULT_STAGES = [
 
 const getSettings = async (req, res, next) => {
   try {
-    const result = await pool.query("SELECT key, value FROM settings");
+    const result = await pool.query("SELECT key, value FROM settings WHERE board_id = $1", [req.boardId]);
     const settings = {};
     result.rows.forEach(r => { settings[r.key] = r.value; });
 
@@ -30,15 +30,19 @@ const getSettings = async (req, res, next) => {
 
 const updateSettings = async (req, res, next) => {
   try {
-    if (req.user.role !== 'admin') return res.status(403).json({ message: 'Forbidden' });
+    // Both admins and managers can update board settings (assuming they have access via requireBoardAccess middleware)
+    if (req.user.role === 'visitor') return res.status(403).json({ message: 'Forbidden' });
     
     const { key, value } = req.body;
     if (!key || !value) return res.status(400).json({ message: 'Key and value required' });
     
+    // Upsert the setting
     await pool.query(
-      `INSERT INTO settings (key, value) VALUES ($1, $2)
-       ON CONFLICT (key) DO UPDATE SET value = EXCLUDED.value`,
-      [key, JSON.stringify(value)]
+      `INSERT INTO settings (board_id, key, value) 
+       VALUES ($1, $2, $3)
+       ON CONFLICT (board_id, key) 
+       DO UPDATE SET value = EXCLUDED.value`,
+      [req.boardId, key, JSON.stringify(value)]
     );
     
     res.json({ message: 'Saved successfully' });

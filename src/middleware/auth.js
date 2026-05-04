@@ -25,11 +25,44 @@ const authenticate = async (req, res, next) => {
     }
 
     req.user = result.rows[0];
+
+    // Extract board_id from X-Board-Id header
+    const boardId = req.headers['x-board-id'];
+    if (boardId && boardId !== 'undefined' && boardId !== 'null') {
+      req.boardId = boardId;
+    }
+
     next();
   } catch (err) {
     if (err.name === 'JsonWebTokenError' || err.name === 'TokenExpiredError') {
       return res.status(401).json({ message: 'Invalid or expired token' });
     }
+    next(err);
+  }
+};
+
+// Middleware: Ensure user has access to the board specified in X-Board-Id
+const requireBoardAccess = async (req, res, next) => {
+  try {
+    if (!req.boardId) {
+      return res.status(400).json({ message: 'X-Board-Id header is required' });
+    }
+
+    // Admins have access to all boards
+    if (req.user.role === 'admin') return next();
+
+    // Check if user is a member of this board
+    const result = await pool.query(
+      'SELECT id FROM board_users WHERE board_id = $1 AND user_id = $2',
+      [req.boardId, req.user.id]
+    );
+
+    if (!result.rows[0]) {
+      return res.status(403).json({ message: 'You do not have access to this board' });
+    }
+
+    next();
+  } catch (err) {
     next(err);
   }
 };
@@ -44,4 +77,4 @@ const requireRole = (...roles) => (req, res, next) => {
 const requireAdmin = requireRole('admin');
 const requireManagerOrAdmin = requireRole('admin', 'manager');
 
-module.exports = { authenticate, requireRole, requireAdmin, requireManagerOrAdmin };
+module.exports = { authenticate, requireRole, requireAdmin, requireManagerOrAdmin, requireBoardAccess };

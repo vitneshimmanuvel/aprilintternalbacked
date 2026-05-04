@@ -6,8 +6,9 @@ const getReminders = async (req, res, next) => {
     const result = await pool.query(
       `SELECT r.*, u.name as user_name FROM reminders r
        JOIN users u ON r.user_id = u.id
-       WHERE r.lead_id = $1 ORDER BY r.remind_at ASC`,
-      [req.params.leadId]
+       JOIN leads l ON r.lead_id = l.id
+       WHERE r.lead_id = $1 AND l.board_id = $2 ORDER BY r.remind_at ASC`,
+      [req.params.leadId, req.boardId]
     );
     res.json({ reminders: result.rows });
   } catch (err) {
@@ -18,16 +19,28 @@ const getReminders = async (req, res, next) => {
 // GET /api/reminders/mine - Current user's upcoming reminders
 const getMyReminders = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      `SELECT r.*, l.title as lead_title, l.client_name, l.stage as lead_stage, u.name as user_name
+    let sql, params;
+    if (req.user.role === 'admin' || req.user.role === 'manager') {
+      // Admins/managers see all reminders on the board
+      sql = `SELECT r.*, l.title as lead_title, l.client_name, l.stage as lead_stage, u.name as user_name
        FROM reminders r
        JOIN leads l ON r.lead_id = l.id
        JOIN users u ON r.user_id = u.id
-       WHERE r.user_id = $1
+       WHERE l.board_id = $1
        ORDER BY r.remind_at DESC
-       LIMIT 100`,
-      [req.user.id]
-    );
+       LIMIT 200`;
+      params = [req.boardId];
+    } else {
+      sql = `SELECT r.*, l.title as lead_title, l.client_name, l.stage as lead_stage, u.name as user_name
+       FROM reminders r
+       JOIN leads l ON r.lead_id = l.id
+       JOIN users u ON r.user_id = u.id
+       WHERE r.user_id = $1 AND l.board_id = $2
+       ORDER BY r.remind_at DESC
+       LIMIT 100`;
+      params = [req.user.id, req.boardId];
+    }
+    const result = await pool.query(sql, params);
     res.json({ reminders: result.rows });
   } catch (err) {
     next(err);
@@ -44,8 +57,10 @@ const createReminder = async (req, res, next) => {
 
     if (!title?.trim() || !remind_at) return res.status(400).json({ message: 'Title and remind_at are required' });
 
-    const leadCheck = await client.query('SELECT id, stage, assigned_to FROM leads WHERE id = $1', [leadId]);
-    if (!leadCheck.rows[0]) return res.status(404).json({ message: 'Lead not found' });
+    const leadCheck = await client.query('SELECT id, stage, assigned_to, board_id FROM leads WHERE id = $1', [leadId]);
+    if (!leadCheck.rows[0] || leadCheck.rows[0].board_id !== req.boardId) {
+      return res.status(404).json({ message: 'Lead not found or access denied' });
+    }
 
     if (req.user.role === 'visitor' && leadCheck.rows[0].assigned_to !== req.user.id) {
       return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });

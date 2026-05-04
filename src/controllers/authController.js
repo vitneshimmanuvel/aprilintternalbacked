@@ -5,6 +5,22 @@ const pool = require('../config/db');
 const generateToken = (userId) =>
   jwt.sign({ userId }, process.env.JWT_SECRET, { expiresIn: process.env.JWT_EXPIRES_IN || '7d' });
 
+// Helper to get user's boards
+const getUserBoards = async (user) => {
+  if (user.role === 'admin') {
+    const result = await pool.query('SELECT * FROM boards WHERE is_active = true ORDER BY created_at ASC');
+    return result.rows;
+  } else {
+    const result = await pool.query(`
+      SELECT b.* FROM boards b
+      JOIN board_users bu ON bu.board_id = b.id
+      WHERE bu.user_id = $1 AND b.is_active = true
+      ORDER BY b.created_at ASC
+    `, [user.id]);
+    return result.rows;
+  }
+};
+
 // POST /api/auth/login
 const login = async (req, res, next) => {
   try {
@@ -27,9 +43,11 @@ const login = async (req, res, next) => {
     }
 
     const token = generateToken(user.id);
+    const boards = await getUserBoards(user);
+
     res.json({
       token,
-      user: { id: user.id, name: user.name, email: user.email, role: user.role },
+      user: { id: user.id, name: user.name, email: user.email, role: user.role, boards },
     });
   } catch (err) {
     next(err);
@@ -37,8 +55,13 @@ const login = async (req, res, next) => {
 };
 
 // GET /api/auth/me
-const getMe = async (req, res) => {
-  res.json({ user: req.user });
+const getMe = async (req, res, next) => {
+  try {
+    const boards = await getUserBoards(req.user);
+    res.json({ user: { ...req.user, boards } });
+  } catch (err) {
+    next(err);
+  }
 };
 
 // PUT /api/auth/change-password

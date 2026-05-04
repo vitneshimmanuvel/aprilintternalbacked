@@ -1,0 +1,2420 @@
+{
+  "users": [
+    {
+      "id": "0b57ac9a-bd54-4742-96c8-fac5b254da2f",
+      "name": "System Admin",
+      "email": "admin@leadflow.com",
+      "password_hash": "$2a$10$qMLSFdilph2mFTaO5z9Bbuyn1SIMSPPOsw/MfEwbzmUabSgTchmcS",
+      "role": "admin",
+      "is_active": true,
+      "created_at": "2026-03-28T07:02:09.375Z",
+      "updated_at": "2026-03-28T07:02:09.375Z",
+      "fcm_token": null
+    },
+    {
+      "id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "name": "jawahar",
+      "email": "settlojawaharkumar@gmail.com",
+      "password_hash": "$2a$10$H3fDM/7NsbkIgMnq6nM3G.cKWFqw7gQzzfDYgHEed25zjhwUR4Maa",
+      "role": "manager",
+      "is_active": true,
+      "created_at": "2026-04-03T05:36:33.507Z",
+      "updated_at": "2026-04-07T12:30:25.141Z",
+      "fcm_token": "dIv2KUgJNK-jRq0hS5DgWj:APA91bFDJETLVqFOI31fxUyUJ3eQIiWIdB-mo8DOQ-UYO0WGNoG49ucgVeianysiako5A6-x6v1hYETn2LBa-SDr78U947gMMZGTD42ZY5X-FZsCCUK6JxU"
+    },
+    {
+      "id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "name": "bala",
+      "email": "settlobala@gmail.com",
+      "password_hash": "$2a$10$TqZGkJlm7CT5TXEFLSPhceErtOMfL4mF6GT7fzRnAVCaXkFlH2vy6",
+      "role": "visitor",
+      "is_active": true,
+      "created_at": "2026-04-03T05:09:09.313Z",
+      "updated_at": "2026-04-03T11:10:14.738Z",
+      "fcm_token": "e1_rfBpt5WjntO-DGMzml9:APA91bFLZ1illwYQC6yZ1dpNvIq5moPc-Eexoo0il5procS-DhmkKq7Lco9kaGmDCWWh77V6gy287MQO-TCtNDZayHJ864iE1Be4TU1jWD0YumzAOMmIB54"
+    },
+    {
+      "id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "name": "shafiq",
+      "email": "settloshafiqmohamed@gmail.com",
+      "password_hash": "$2a$10$cCftFcksjLM97x99wfN.CeBwHwUovA0q2hLQHqEsQ8lqnxkwGess6",
+      "role": "visitor",
+      "is_active": true,
+      "created_at": "2026-04-03T05:09:55.399Z",
+      "updated_at": "2026-04-17T05:22:39.974Z",
+      "fcm_token": "c70gq1s5OrTKCpiGwyDKpu:APA91bH3XJsSWME7q8FAWDbQB1LL4MeHN5Rec73sPUqxis-7Syc7LTynUogF_ct0PQ_W8XvkmpLJNFH51D9SFQajjT_xSySvbp3utXdKKA6Kljg00q2p0Io"
+    }
+  ],
+  "leads": [
+    {
+      "id": "65e4430d-7842-411b-b473-330594f7bda1",
+      "title": "SKM",
+      "client_name": "Poovendran",
+      "client_email": "",
+      "client_phone": "9994451554",
+      "client_company": "SKM",
+      "description": "",
+      "stage": "negotiation",
+      "priority": "medium",
+      "value": "1360000.00",
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T08:25:00.629Z",
+      "updated_at": "2026-04-07T08:25:27.123Z"
+    },
+    {
+      "id": "277d3c44-fcb6-4957-bcf0-4c8ac40e2b47",
+      "title": "Senthur Events",
+      "client_name": "Boopathi",
+      "client_email": "",
+      "client_phone": "9578547696",
+      "client_company": "Senthur Evebnts",
+      "description": "Evening 6 pm today meeting",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T08:26:36.614Z",
+      "updated_at": "2026-04-07T08:27:03.942Z"
+    },
+    {
+      "id": "3afa279b-5e4f-41e0-b26f-b8d6a0ac8974",
+      "title": "Coral Rewinding",
+      "client_name": "Sivaraman",
+      "client_email": "",
+      "client_phone": "7305072163",
+      "client_company": "Coral",
+      "description": "Transport tracking app",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T08:29:57.307Z",
+      "updated_at": "2026-04-07T08:30:06.411Z"
+    },
+    {
+      "id": "e9faff6c-e90b-47f8-8fdf-b402b01eef4b",
+      "title": "Gokula krishna finnace",
+      "client_name": "Adhi Sridhar",
+      "client_email": "",
+      "client_phone": "",
+      "client_company": "",
+      "description": "",
+      "stage": "meeting",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T09:05:16.536Z",
+      "updated_at": "2026-04-07T09:05:16.536Z"
+    },
+    {
+      "id": "5d574bba-db79-438d-b26f-39d5ccdd0a60",
+      "title": "driver app",
+      "client_name": "raja raman",
+      "client_email": "",
+      "client_phone": "8190941284",
+      "client_company": "vaigai travels ",
+      "description": "need a uber like app to dicuss between the user and the drvier wherre the travels works as medium ",
+      "stage": "meeting",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-07T10:56:45.830Z",
+      "updated_at": "2026-04-07T10:56:45.830Z"
+    },
+    {
+      "id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "title": "School card app",
+      "client_name": "Mailary",
+      "client_email": "",
+      "client_phone": "8951946651",
+      "client_company": "",
+      "description": "School IOD card aapp design ",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-07T09:01:39.442Z",
+      "updated_at": "2026-04-10T10:13:00.292Z"
+    },
+    {
+      "id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "title": "jwellery and diamonnd app",
+      "client_name": "Mehak",
+      "client_email": "",
+      "client_phone": "7585812286",
+      "client_company": "Mehak Gold & Diamonds",
+      "description": "jwleey and diamond app for his business ",
+      "stage": "negotiation",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T10:51:10.113Z",
+      "updated_at": "2026-04-10T11:24:12.864Z"
+    },
+    {
+      "id": "06898c76-f5d8-4715-ad9f-d59098a7309a",
+      "title": "Hrms Management App",
+      "client_name": "Arun",
+      "client_email": "",
+      "client_phone": "7339413192",
+      "client_company": "Speaking education",
+      "description": "Hrms managemtn app to maintian employee datas - tiruppur",
+      "stage": "followup",
+      "priority": "medium",
+      "value": "30000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T09:49:56.768Z",
+      "updated_at": "2026-04-10T11:24:15.852Z"
+    },
+    {
+      "id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "title": "promotional video",
+      "client_name": "baagyalakshmi",
+      "client_email": "",
+      "client_phone": "8438266713",
+      "client_company": "velavan stores",
+      "description": "doscussed for prmotional video \ntiruvathoir based  ",
+      "stage": "followup",
+      "priority": "medium",
+      "value": "3000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-07T11:05:18.621Z",
+      "updated_at": "2026-04-07T11:31:44.934Z"
+    },
+    {
+      "id": "4f18180c-c455-43a0-898a-1c3be6b56811",
+      "title": "job realted App",
+      "client_name": "siva",
+      "client_email": "",
+      "client_phone": "9042744092",
+      "client_company": "choice siko",
+      "description": "manual candidate registration by team app with payment gateway ",
+      "stage": "negotiation",
+      "priority": "medium",
+      "value": "220000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T09:57:07.289Z",
+      "updated_at": "2026-04-10T11:24:19.616Z"
+    },
+    {
+      "id": "5eef6dd8-cc20-44c4-b1d2-3b8cd729bf8e",
+      "title": "e commerce website",
+      "client_name": "viji",
+      "client_email": "",
+      "client_phone": "9962690666",
+      "client_company": "ms herb tea",
+      "description": "want an ecommerce website for  thier herbal tea business .",
+      "stage": "meeting",
+      "priority": "medium",
+      "value": "40000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-15T09:47:00.212Z",
+      "updated_at": "2026-04-15T09:47:00.212Z"
+    },
+    {
+      "id": "266a0b12-6726-499e-b209-b577fbd80850",
+      "title": "Tenat App Design",
+      "client_name": "Rilva",
+      "client_email": "",
+      "client_phone": "87540 53276",
+      "client_company": "Rilva deen",
+      "description": "QUotiaotn complted waiting for clinet approval",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": "65000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-09T09:20:07.885Z",
+      "updated_at": "2026-04-10T10:12:27.514Z"
+    },
+    {
+      "id": "3d1e1f16-b1be-4ca3-bcc6-4f4aaec8dfb8",
+      "title": "Teraining redirect App",
+      "client_name": "santhi kumar",
+      "client_email": "",
+      "client_phone": "9032767006",
+      "client_company": "sk school;",
+      "description": "",
+      "stage": "meeting",
+      "priority": "medium",
+      "value": "15000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-15T09:59:23.062Z",
+      "updated_at": "2026-04-15T09:59:23.062Z"
+    },
+    {
+      "id": "114720ae-dcad-4821-a59d-e7cda99d0973",
+      "title": "Mobile app and crm",
+      "client_name": "Alok - Noida",
+      "client_email": "",
+      "client_phone": "9004110090",
+      "client_company": ".",
+      "description": "Mobile app for dovotor apointment booking and web app for admin management ",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": "88000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T07:29:38.720Z",
+      "updated_at": "2026-04-03T07:29:58.530Z"
+    },
+    {
+      "id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "title": "b2b for mobile App",
+      "client_name": "vinnarasan",
+      "client_email": "",
+      "client_phone": "9551436677",
+      "client_company": "bluesoftinfotech",
+      "description": "B2b for Mobile App with commsioin based ",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T07:31:12.135Z",
+      "updated_at": "2026-04-03T07:31:22.729Z"
+    },
+    {
+      "id": "a9125e25-b882-446a-a1a4-1788e8aeb740",
+      "title": "Femi 9",
+      "client_name": "Abinesh",
+      "client_email": "",
+      "client_phone": "9952428768",
+      "client_company": "femi 9",
+      "description": "",
+      "stage": "negotiation",
+      "priority": "medium",
+      "value": "190000.00",
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T08:15:09.772Z",
+      "updated_at": "2026-04-07T08:15:21.075Z"
+    },
+    {
+      "id": "f05651a0-1535-4dbe-b77b-1ac7c9470b63",
+      "title": "Promotionl Video",
+      "client_name": "aradhana",
+      "client_email": "",
+      "client_phone": "6385454388",
+      "client_company": "elenom",
+      "description": "Promotinla video for hospitality services services with meta ",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": "3000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T09:59:10.817Z",
+      "updated_at": "2026-04-03T09:59:34.939Z"
+    },
+    {
+      "id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "title": "Wordpress Webiste updation",
+      "client_name": "ahmed",
+      "client_email": "",
+      "client_phone": "9176466960",
+      "client_company": "Aliftherpahy",
+      "description": "need updation on the already available wordpress website .",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": "10000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T07:37:21.630Z",
+      "updated_at": "2026-04-03T09:59:43.925Z"
+    },
+    {
+      "id": "627ed3ff-d960-40af-a844-fe02a842af12",
+      "title": "Api updation",
+      "client_name": "Rayka",
+      "client_email": "",
+      "client_phone": "9510789458",
+      "client_company": "",
+      "description": "Api changes in a exisitng app",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T07:36:01.088Z",
+      "updated_at": "2026-04-03T10:00:00.577Z"
+    },
+    {
+      "id": "f004dfce-fb9c-4c74-a323-13765d7101c9",
+      "title": "Website",
+      "client_name": "Priyasakthi",
+      "client_email": "",
+      "client_phone": "8489426627",
+      "client_company": "",
+      "description": "Webite ",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T10:20:18.942Z",
+      "updated_at": "2026-04-03T10:37:44.288Z"
+    },
+    {
+      "id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "title": "Website designs",
+      "client_name": "Arul Kumar",
+      "client_email": "",
+      "client_phone": "9600571424",
+      "client_company": "",
+      "description": "they will assing the website work and take care of hosting ",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T10:39:06.861Z",
+      "updated_at": "2026-04-03T10:39:14.526Z"
+    },
+    {
+      "id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "title": "Stock Management Crm",
+      "client_name": "satish kumar",
+      "client_email": "",
+      "client_phone": "9943916215",
+      "client_company": "cycle world ",
+      "description": "Stock management and tarcking app ",
+      "stage": "followup",
+      "priority": "medium",
+      "value": "30000.00",
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-03T07:33:36.601Z",
+      "updated_at": "2026-04-03T10:40:52.853Z"
+    },
+    {
+      "id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "title": "website and digital marketing",
+      "client_name": "Praveen",
+      "client_email": "",
+      "client_phone": "7010073283",
+      "client_company": "MN interiors",
+      "description": "",
+      "stage": "meeting",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_by": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_at": "2026-04-03T11:02:17.721Z",
+      "updated_at": "2026-04-03T11:02:17.721Z"
+    },
+    {
+      "id": "f96b5439-4c9c-44d3-89b0-bc3c3d1dae06",
+      "title": "Digital marketing",
+      "client_name": "Dinesh",
+      "client_email": "",
+      "client_phone": "7904606058",
+      "client_company": "ABIRAMI BALOONS",
+      "description": "",
+      "stage": "followup",
+      "priority": "medium",
+      "value": "15000.00",
+      "assigned_to": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_by": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_at": "2026-04-03T11:07:22.587Z",
+      "updated_at": "2026-04-03T11:09:48.605Z"
+    },
+    {
+      "id": "baeae430-d497-4b87-8b79-523a3adee21f",
+      "title": "website",
+      "client_name": "A1 fabrics erode",
+      "client_email": "",
+      "client_phone": "9994013478",
+      "client_company": "A1 fabrics erode",
+      "description": "",
+      "stage": "cancelled",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_by": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_at": "2026-04-03T11:04:07.585Z",
+      "updated_at": "2026-04-03T11:09:53.504Z"
+    },
+    {
+      "id": "78fd1c12-5878-4caa-bb9a-7c49010dd280",
+      "title": "Website",
+      "client_name": "saravanan",
+      "client_email": "",
+      "client_phone": "9840774009",
+      "client_company": "funcky world",
+      "description": "",
+      "stage": "negotiation",
+      "priority": "medium",
+      "value": "24000.00",
+      "assigned_to": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_by": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "created_at": "2026-04-03T11:12:38.820Z",
+      "updated_at": "2026-04-03T11:12:50.187Z"
+    },
+    {
+      "id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "title": "Webiste/digital marketing",
+      "client_name": "Mobilenumero",
+      "client_email": "",
+      "client_phone": "8300000001",
+      "client_company": "",
+      "description": "shared our portflio no updates",
+      "stage": "followup",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-06T11:38:10.266Z",
+      "updated_at": "2026-04-06T11:38:59.620Z"
+    },
+    {
+      "id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "title": "website design",
+      "client_name": "naveen",
+      "client_email": "",
+      "client_phone": "9443284429",
+      "client_company": "tts foods private limited ",
+      "description": "pitched for website design connected aand meeting scheduled .",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": null,
+      "assigned_to": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_by": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "created_at": "2026-04-06T12:00:43.650Z",
+      "updated_at": "2026-04-07T07:03:02.210Z"
+    },
+    {
+      "id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "title": "beauty palace",
+      "client_name": "nelson",
+      "client_email": "",
+      "client_phone": "8778150003",
+      "client_company": "beauty palace",
+      "description": "",
+      "stage": "finalization",
+      "priority": "medium",
+      "value": "25000.00",
+      "assigned_to": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_by": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "created_at": "2026-04-07T08:17:19.685Z",
+      "updated_at": "2026-04-07T08:19:46.574Z"
+    }
+  ],
+  "lead_history": [
+    {
+      "id": "ba5a5392-e00a-4c3f-9a11-5b4b02f6b8f2",
+      "lead_id": "114720ae-dcad-4821-a59d-e7cda99d0973",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Mobile app and crm",
+        "client_name": "Alok - Noida"
+      },
+      "created_at": "2026-04-03T07:29:38.720Z"
+    },
+    {
+      "id": "55f54574-7b6e-47f5-8fe8-32dac8681ddd",
+      "lead_id": "114720ae-dcad-4821-a59d-e7cda99d0973",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T07:29:58.530Z"
+    },
+    {
+      "id": "188bb68c-2f06-4449-81c7-f32fa8d334f3",
+      "lead_id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "b2b for mobile App",
+        "client_name": "vinnarasan"
+      },
+      "created_at": "2026-04-03T07:31:12.135Z"
+    },
+    {
+      "id": "fb0f026a-c32f-48ef-be9f-b2d8cc97787b",
+      "lead_id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T07:31:20.771Z"
+    },
+    {
+      "id": "97d95e83-9200-459a-a9db-40a8ac830ee1",
+      "lead_id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "negotiation",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "negotiation"
+      },
+      "created_at": "2026-04-03T07:31:22.729Z"
+    },
+    {
+      "id": "9b177ca9-0abb-46ba-a199-54f967685a83",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Stock Management Crm",
+        "client_name": "satish kumar"
+      },
+      "created_at": "2026-04-03T07:33:36.601Z"
+    },
+    {
+      "id": "d05d0470-cc2a-42e2-ade6-518cfe1a1846",
+      "lead_id": "627ed3ff-d960-40af-a844-fe02a842af12",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Api updation",
+        "client_name": "Rayka"
+      },
+      "created_at": "2026-04-03T07:36:01.088Z"
+    },
+    {
+      "id": "e1335069-9218-4c25-80be-4d49e7ceedc9",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Wordpress Webiste updation",
+        "client_name": "ahmed"
+      },
+      "created_at": "2026-04-03T07:37:21.630Z"
+    },
+    {
+      "id": "d30659e0-123d-4760-804b-f8426bcd6ee6",
+      "lead_id": "06898c76-f5d8-4715-ad9f-d59098a7309a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Hrms Management App",
+        "client_name": "Arun"
+      },
+      "created_at": "2026-04-03T09:49:56.768Z"
+    },
+    {
+      "id": "fecefd05-f442-42a3-bf05-bb047422a601",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "",
+      "new_value": "10000",
+      "details": {},
+      "created_at": "2026-04-03T09:50:11.035Z"
+    },
+    {
+      "id": "4db0b07f-e7d3-499b-8b0e-4940a86c638b",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "10000.00",
+      "new_value": "10000",
+      "details": {},
+      "created_at": "2026-04-03T09:50:12.700Z"
+    },
+    {
+      "id": "2683cfa4-74c8-4cf2-af9d-d3942eba9609",
+      "lead_id": "4f18180c-c455-43a0-898a-1c3be6b56811",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "job realted App",
+        "client_name": "siva"
+      },
+      "created_at": "2026-04-03T09:57:07.289Z"
+    },
+    {
+      "id": "0969e8dd-c715-47f1-9a02-f3545a281504",
+      "lead_id": "f05651a0-1535-4dbe-b77b-1ac7c9470b63",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Promotionl Video",
+        "client_name": "aradhana"
+      },
+      "created_at": "2026-04-03T09:59:10.817Z"
+    },
+    {
+      "id": "97fe4c10-b2a9-4775-8397-4b95358f4f02",
+      "lead_id": "f05651a0-1535-4dbe-b77b-1ac7c9470b63",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T09:59:34.939Z"
+    },
+    {
+      "id": "3acbeb4a-d99d-45cb-bcd3-73f57042d2ec",
+      "lead_id": "4f18180c-c455-43a0-898a-1c3be6b56811",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "estimation_review",
+      "details": {
+        "to": "estimation_review",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T09:59:39.876Z"
+    },
+    {
+      "id": "a2543dfd-ea3a-40d5-a037-5a38cdc8987c",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T09:59:43.925Z"
+    },
+    {
+      "id": "fd0eae34-92d7-4be0-a0ad-52d881df7c22",
+      "lead_id": "06898c76-f5d8-4715-ad9f-d59098a7309a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "estimation_review",
+      "details": {
+        "to": "estimation_review",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T09:59:58.304Z"
+    },
+    {
+      "id": "6be2bef4-408b-4b69-9853-253f10f3c749",
+      "lead_id": "627ed3ff-d960-40af-a844-fe02a842af12",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:00:00.577Z"
+    },
+    {
+      "id": "11571ec1-5617-406a-9e12-6a66cf347521",
+      "lead_id": "f004dfce-fb9c-4c74-a323-13765d7101c9",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Website",
+        "client_name": "Priyasakthi"
+      },
+      "created_at": "2026-04-03T10:20:18.942Z"
+    },
+    {
+      "id": "08b8acf5-c279-4a1f-a4fa-e45210b36858",
+      "lead_id": "f004dfce-fb9c-4c74-a323-13765d7101c9",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:37:44.288Z"
+    },
+    {
+      "id": "cc5204c5-f3b5-4bcd-8e7e-7e7c45350bb5",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Website designs",
+        "client_name": "Arul Kumar"
+      },
+      "created_at": "2026-04-03T10:39:06.861Z"
+    },
+    {
+      "id": "510a61cc-688d-4ca4-bf08-e7f595827a62",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:39:14.526Z"
+    },
+    {
+      "id": "b42f568e-15de-42ca-9dcc-3bb029c863e8",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "preview": "Demo prepared and waiting for the leads meetup since lead is busy in handling th",
+        "money_collected": false
+      },
+      "created_at": "2026-04-03T10:40:33.883Z"
+    },
+    {
+      "id": "817a3a7c-a5ac-41cf-ae3e-c6878ac72d76",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:40:52.853Z"
+    },
+    {
+      "id": "9309231c-cc00-4fec-817b-02283f8adac9",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "jwellery and diamonnd app",
+        "client_name": "Mehak"
+      },
+      "created_at": "2026-04-03T10:51:10.113Z"
+    },
+    {
+      "id": "c6811b5b-3f29-4955-ab45-381b209ddd41",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:51:17.360Z"
+    },
+    {
+      "id": "567ad248-d665-4f69-8891-6a8e1dec6bf2",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "followup",
+      "new_value": "meeting",
+      "details": {
+        "to": "meeting",
+        "from": "followup"
+      },
+      "created_at": "2026-04-03T10:51:18.446Z"
+    },
+    {
+      "id": "a2798b45-90a9-4cea-b4ef-20f1f8fd020f",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "title": "followup",
+        "remind_at": "2026-04-06T10:51:00.000Z"
+      },
+      "created_at": "2026-04-03T10:52:22.183Z"
+    },
+    {
+      "id": "dbf151fd-0452-43c6-9292-503cb1d5bb51",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T10:52:41.194Z"
+    },
+    {
+      "id": "598c0752-d831-40e5-940c-adaf1e7d9628",
+      "lead_id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "website and digital marketing",
+        "client_name": "Praveen"
+      },
+      "created_at": "2026-04-03T11:02:17.721Z"
+    },
+    {
+      "id": "8a7e595e-c754-4e08-8b29-b10a8e439445",
+      "lead_id": "baeae430-d497-4b87-8b79-523a3adee21f",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "website",
+        "client_name": "A1 fabrics erode"
+      },
+      "created_at": "2026-04-03T11:04:07.585Z"
+    },
+    {
+      "id": "22616c82-d16f-4420-bbeb-c2e2de92d74d",
+      "lead_id": "f96b5439-4c9c-44d3-89b0-bc3c3d1dae06",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Digital marketing",
+        "client_name": "Dinesh"
+      },
+      "created_at": "2026-04-03T11:07:22.587Z"
+    },
+    {
+      "id": "da425243-79d6-4332-8bca-1027be08d05e",
+      "lead_id": "f96b5439-4c9c-44d3-89b0-bc3c3d1dae06",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T11:09:48.605Z"
+    },
+    {
+      "id": "c37e982d-57dd-4392-805c-6dbac1702b2c",
+      "lead_id": "baeae430-d497-4b87-8b79-523a3adee21f",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "cancelled",
+      "details": {
+        "to": "cancelled",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T11:09:53.504Z"
+    },
+    {
+      "id": "5406fb58-c908-47e1-a9bb-c4c5d320d2c0",
+      "lead_id": "78fd1c12-5878-4caa-bb9a-7c49010dd280",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Website",
+        "client_name": "saravanan"
+      },
+      "created_at": "2026-04-03T11:12:38.820Z"
+    },
+    {
+      "id": "7a9a8c8f-0776-46e3-8ee2-b922cfa92d4e",
+      "lead_id": "78fd1c12-5878-4caa-bb9a-7c49010dd280",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-03T11:12:50.187Z"
+    },
+    {
+      "id": "ef46c349-c0b7-4abd-866f-414334a63481",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Webiste/digital marketing",
+        "client_name": "Mobilenumero"
+      },
+      "created_at": "2026-04-06T11:38:10.266Z"
+    },
+    {
+      "id": "24a52bf5-e87f-4e14-b3aa-e8c3de745484",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-06T11:38:59.620Z"
+    },
+    {
+      "id": "67073870-b72e-45bf-83a3-41a07814fefc",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "They said they will send the reuqimrents to the mail but still didnt revied it y",
+        "money_collected": false
+      },
+      "created_at": "2026-04-06T11:42:48.646Z"
+    },
+    {
+      "id": "036e47e7-6d8c-4b25-9c21-999f937f11d0",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "website design",
+        "client_name": "naveen"
+      },
+      "created_at": "2026-04-06T12:00:43.650Z"
+    },
+    {
+      "id": "17382976-e7ef-41cc-8eee-8b8148c52e8b",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "completed the meet and requested for quotation .",
+        "status": "completed",
+        "reminder_title": "followup"
+      },
+      "created_at": "2026-04-06T12:01:10.716Z"
+    },
+    {
+      "id": "ad059b28-8f79-4c69-aa01-c9a3bb42b52c",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "completed the meet and requested for quotation .",
+        "status": "completed",
+        "reminder_title": "followup"
+      },
+      "created_at": "2026-04-06T12:01:13.203Z"
+    },
+    {
+      "id": "b3f8fd05-b04f-4f7c-bb7c-6dcdf2f4b083",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "title": "webiste demo and quotiaon meet",
+        "remind_at": "2026-04-07T12:01:00.000Z"
+      },
+      "created_at": "2026-04-06T12:01:48.840Z"
+    },
+    {
+      "id": "0a889ea7-8b89-401c-a4d8-73fdfc61d620",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "dedmo completed and meeting complted need to share the quotaiaon and get verific",
+        "money_collected": false
+      },
+      "created_at": "2026-04-06T12:40:09.790Z"
+    },
+    {
+      "id": "5f7c611f-e509-4663-97c0-4c700347d281",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "complteedd",
+        "status": "completed",
+        "reminder_title": "webiste demo and quotiaon meet"
+      },
+      "created_at": "2026-04-07T07:02:33.229Z"
+    },
+    {
+      "id": "95e3c084-84ac-42fb-b078-44dfc923939b",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "complteedd",
+        "status": "completed",
+        "reminder_title": "webiste demo and quotiaon meet"
+      },
+      "created_at": "2026-04-07T07:02:35.821Z"
+    },
+    {
+      "id": "ef965e5c-ab04-42a6-9b86-dbbb926247cb",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T07:03:02.210Z"
+    },
+    {
+      "id": "d1243057-efef-43da-9a10-f7014529946f",
+      "lead_id": "a9125e25-b882-446a-a1a4-1788e8aeb740",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Femi 9",
+        "client_name": "Abinesh"
+      },
+      "created_at": "2026-04-07T08:15:09.772Z"
+    },
+    {
+      "id": "323a99ae-65fd-41e7-99dc-03e5c12a59ef",
+      "lead_id": "a9125e25-b882-446a-a1a4-1788e8aeb740",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T08:15:21.075Z"
+    },
+    {
+      "id": "801ea1d5-573c-4b47-a110-e9eb0bf5566b",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "beauty palace",
+        "client_name": "nelson"
+      },
+      "created_at": "2026-04-07T08:17:19.685Z"
+    },
+    {
+      "id": "27bcd2a3-3b31-4f84-8e4b-310e89c5c060",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "estimation_review",
+      "details": {
+        "to": "estimation_review",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T08:19:45.137Z"
+    },
+    {
+      "id": "470a5488-c8ab-413f-a87d-2c62440f0865",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "estimation_review",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "estimation_review"
+      },
+      "created_at": "2026-04-07T08:19:46.574Z"
+    },
+    {
+      "id": "3bf40853-4280-413e-a10f-13a810cdbb8d",
+      "lead_id": "65e4430d-7842-411b-b473-330594f7bda1",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "SKM",
+        "client_name": "Poovendran"
+      },
+      "created_at": "2026-04-07T08:25:00.629Z"
+    },
+    {
+      "id": "9dd32a5b-4cf4-4cfe-b6de-849a526b713d",
+      "lead_id": "65e4430d-7842-411b-b473-330594f7bda1",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T08:25:27.123Z"
+    },
+    {
+      "id": "d42ed5ee-12d1-4bda-a7fe-166f299b48cb",
+      "lead_id": "277d3c44-fcb6-4957-bcf0-4c8ac40e2b47",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Senthur Events",
+        "client_name": "Boopathi"
+      },
+      "created_at": "2026-04-07T08:26:36.614Z"
+    },
+    {
+      "id": "2c0e7965-15f9-4bc2-9c72-5398967899ad",
+      "lead_id": "277d3c44-fcb6-4957-bcf0-4c8ac40e2b47",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T08:27:03.942Z"
+    },
+    {
+      "id": "598c5f39-d108-4a6b-b716-bc37c690ec15",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "preview": "Demo prepared and Presented to client - Jawahar\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T08:28:01.313Z"
+    },
+    {
+      "id": "0fe3b42e-9744-482d-a410-5b7637052ff2",
+      "lead_id": "3afa279b-5e4f-41e0-b26f-b8d6a0ac8974",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Coral Rewinding",
+        "client_name": "Sivaraman"
+      },
+      "created_at": "2026-04-07T08:29:57.307Z"
+    },
+    {
+      "id": "87c49104-7b46-4085-8da2-f802dfe13a83",
+      "lead_id": "3afa279b-5e4f-41e0-b26f-b8d6a0ac8974",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T08:30:06.411Z"
+    },
+    {
+      "id": "75b588d7-87cf-4012-a6d2-f75ba5fd9d75",
+      "lead_id": "3afa279b-5e4f-41e0-b26f-b8d6a0ac8974",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "Asked for Mail id and discussed for quotation",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T08:32:24.140Z"
+    },
+    {
+      "id": "c9a7db2c-ce15-4be8-b96a-8455f257ecc9",
+      "lead_id": "114720ae-dcad-4821-a59d-e7cda99d0973",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "preview": "Confirmation request message has been drafted and sent-jawahar",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T08:55:27.593Z"
+    },
+    {
+      "id": "59c0f05c-9dca-42b3-9227-2a35af999721",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "preview": "today Call followup Done not pickjing_ need to follwoup on Tommorow-jawahar\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T08:56:42.398Z"
+    },
+    {
+      "id": "1d8a22a3-8dc0-4965-8ed0-a3405fc704f1",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "title": "Nelson-eaiuty palace",
+        "remind_at": "2026-04-08T03:30:00.000Z"
+      },
+      "created_at": "2026-04-07T08:57:09.444Z"
+    },
+    {
+      "id": "dab58085-b746-47f2-bc23-d0fb69e187e4",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "School card app",
+        "client_name": "Mailary"
+      },
+      "created_at": "2026-04-07T09:01:39.442Z"
+    },
+    {
+      "id": "78687ea8-df36-4248-aa50-7dfed87b5b89",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "followup",
+      "new_value": "estimation_review",
+      "details": {
+        "to": "estimation_review",
+        "from": "followup"
+      },
+      "created_at": "2026-04-07T09:01:54.466Z"
+    },
+    {
+      "id": "254d78c2-9b23-468e-9812-831a6493264c",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "estimation_review",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "estimation_review"
+      },
+      "created_at": "2026-04-07T09:01:58.179Z"
+    },
+    {
+      "id": "66b92f34-6f75-4643-90e4-13701428501a",
+      "lead_id": "e9faff6c-e90b-47f8-8fdf-b402b01eef4b",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Gokula krishna finnace",
+        "client_name": "Adhi Sridhar"
+      },
+      "created_at": "2026-04-07T09:05:16.536Z"
+    },
+    {
+      "id": "53f051ce-94e3-48b6-90f6-91c3fa14b15a",
+      "lead_id": "e9faff6c-e90b-47f8-8fdf-b402b01eef4b",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "preview": "meetup Scheduled on Wednesday(07/04/2026)\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:05:57.734Z"
+    },
+    {
+      "id": "807ecb0a-9a70-42ff-bdf6-b69bac1207fd",
+      "lead_id": "a9125e25-b882-446a-a1a4-1788e8aeb740",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "negotiation",
+        "preview": "Today vsisited and get negotiated on 10 k offer price and said about 5 days conf",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:08:40.595Z"
+    },
+    {
+      "id": "26492787-9721-46fd-8157-f2f1807ca1dc",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "preview": "Demo preparation under going by jawahar-Will present on Wednesday-08/04/2026-Jaw",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:10:59.522Z"
+    },
+    {
+      "id": "5fb137f5-a09e-4f1d-b785-9db27be7424c",
+      "lead_id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "title": "meetup with jawahar sir",
+        "remind_at": "2026-04-08T03:30:00.000Z"
+      },
+      "created_at": "2026-04-07T09:11:57.786Z"
+    },
+    {
+      "id": "f23a3092-ec6a-414f-a5a3-703940b2dd2b",
+      "lead_id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "preview": "Need to 2nd level visity by tommorow (shafiq and jawahar)",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:12:36.136Z"
+    },
+    {
+      "id": "cd74ef02-e0de-4007-9f5c-db7c290ca818",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "Demo link prepared - https://gold-wine-delta.vercel.app/",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:13:52.241Z"
+    },
+    {
+      "id": "5ca08316-8228-4de9-b546-95e139b87725",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "https://gold-wine-delta.vercel.app/",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:14:15.986Z"
+    },
+    {
+      "id": "0a29ef4a-520b-4727-b8db-fb6b9ddc5bb6",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "No response from calls - shared our portfolio- cant get the clear requirement\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:15:46.759Z"
+    },
+    {
+      "id": "99665625-7bce-4725-86ef-19dc3a6790fc",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "folowup done after elections they said us to call back to follow",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:52:49.070Z"
+    },
+    {
+      "id": "b2b372cb-d65d-479b-bf97-7ce92f86ce21",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "Called and offer initimated today - will confirm by tommorow\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T09:18:14.197Z"
+    },
+    {
+      "id": "529c8b41-e7a8-4f78-bf67-63ab7cce115c",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "shared our potflio cant aable to connect with caall no cleaar communicaaation ",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:07:30.512Z"
+    },
+    {
+      "id": "452f9093-dec6-4af5-9f9b-1ce66f4d51e8",
+      "lead_id": "f004dfce-fb9c-4c74-a323-13765d7101c9",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "followup done , in travel will connecct after reaching detination\n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:12:41.116Z"
+    },
+    {
+      "id": "a95eada9-750c-43b3-922e-cd84b6a5acce",
+      "lead_id": "627ed3ff-d960-40af-a844-fe02a842af12",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "still no upadtion or no meetup arranged aas client no response \n",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:15:18.888Z"
+    },
+    {
+      "id": "53210c03-adc4-40ba-b7ec-fd1f611582eb",
+      "lead_id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "followup",
+        "preview": "no clinets available for them to present the app projeccts to us\nonce they get t",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:16:24.794Z"
+    },
+    {
+      "id": "b6c79d64-5120-45e7-b984-eefe0d346a13",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "preview": "demo and qoutaion work completed  shared and wating for leads paymesnt ",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:22:13.517Z"
+    },
+    {
+      "id": "534f37a3-ba54-4b46-aac8-f217e3b0142d",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "note_added",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "finalization",
+        "preview": "leaad stuck with a personal problems once resolved he will continue with us agai",
+        "money_collected": false
+      },
+      "created_at": "2026-04-07T10:22:52.629Z"
+    },
+    {
+      "id": "0e3036a5-19b8-4c31-85c7-b7c8d0ba87b5",
+      "lead_id": "5d574bba-db79-438d-b26f-39d5ccdd0a60",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "driver app",
+        "client_name": "raja raman"
+      },
+      "created_at": "2026-04-07T10:56:45.830Z"
+    },
+    {
+      "id": "a0280cbf-2b2d-40f5-9213-4ec815fe2dac",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "promotional video",
+        "client_name": "baagyalakshmi"
+      },
+      "created_at": "2026-04-07T11:05:18.621Z"
+    },
+    {
+      "id": "114ac7a6-ecd5-4f3c-bba1-a15f940766b7",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:33.216Z"
+    },
+    {
+      "id": "de4a47ff-dbc4-4a82-8292-38601789d125",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:34.847Z"
+    },
+    {
+      "id": "48270787-285b-45d0-9d4b-82542569bef3",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:36.287Z"
+    },
+    {
+      "id": "1c04e01b-e7ef-44e2-a703-a2accc4b8a2c",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:37.784Z"
+    },
+    {
+      "id": "c7c5d65a-bf8f-4e52-aff1-594b885809f8",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:37.892Z"
+    },
+    {
+      "id": "6f31b5ca-41de-41fd-afb0-8cd5676ca896",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:39.368Z"
+    },
+    {
+      "id": "c8969590-560a-4347-9f14-4014ef042433",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:39.591Z"
+    },
+    {
+      "id": "f88a5c29-2f6b-455a-ad63-c7fd3dea112e",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "value",
+      "old_value": "3000.00",
+      "new_value": "3000",
+      "details": {},
+      "created_at": "2026-04-07T11:05:40.958Z"
+    },
+    {
+      "id": "a0cd9fd4-9d61-4e5a-952d-a7d62c5a1d9b",
+      "lead_id": "362f0195-2afe-4cc6-8514-badbc23e77ec",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-07T11:31:44.934Z"
+    },
+    {
+      "id": "cb33c4ba-fe52-47dc-81e9-ba19c0e29409",
+      "lead_id": "5d574bba-db79-438d-b26f-39d5ccdd0a60",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "title": "demo showcase meeting",
+        "remind_at": "2026-04-08T11:32:00.000Z"
+      },
+      "created_at": "2026-04-07T11:32:13.759Z"
+    },
+    {
+      "id": "94e41242-b25e-4e2f-b27a-602f89669001",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_set",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "stage": "meeting",
+        "title": "demo showcase meeting",
+        "remind_at": "2026-04-08T11:32:00.000Z"
+      },
+      "created_at": "2026-04-07T11:32:41.968Z"
+    },
+    {
+      "id": "1b6b6418-5d58-48b3-99fa-3158eb753c86",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "followup",
+      "new_value": "estimation_review",
+      "details": {
+        "to": "estimation_review",
+        "from": "followup"
+      },
+      "created_at": "2026-04-08T09:49:35.410Z"
+    },
+    {
+      "id": "61b1c2be-75fb-4554-be9b-e2691edce099",
+      "lead_id": "266a0b12-6726-499e-b209-b577fbd80850",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Tenat App Design",
+        "client_name": "Rilva"
+      },
+      "created_at": "2026-04-09T09:20:07.885Z"
+    },
+    {
+      "id": "56c4d245-b2ac-402b-beb5-e67085a94675",
+      "lead_id": "266a0b12-6726-499e-b209-b577fbd80850",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "field_updated",
+      "field_changed": "client_phone",
+      "old_value": "",
+      "new_value": "87540 53276",
+      "details": {},
+      "created_at": "2026-04-09T09:30:57.857Z"
+    },
+    {
+      "id": "e222acc7-53e9-4f3a-924b-b3ced110d2b6",
+      "lead_id": "266a0b12-6726-499e-b209-b577fbd80850",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-09T09:41:01.800Z"
+    },
+    {
+      "id": "0e6db2bf-bfbe-4cec-a47b-a510aacc196f",
+      "lead_id": "266a0b12-6726-499e-b209-b577fbd80850",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "followup",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "followup"
+      },
+      "created_at": "2026-04-10T10:12:27.514Z"
+    },
+    {
+      "id": "8affd8ae-ebb7-4d09-b4c6-7dd232774978",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "meeting",
+      "new_value": "finalization",
+      "details": {
+        "to": "finalization",
+        "from": "meeting"
+      },
+      "created_at": "2026-04-10T10:13:00.292Z"
+    },
+    {
+      "id": "f9abde40-a588-4836-920e-6ba200f60f05",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "estimation_review",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "estimation_review"
+      },
+      "created_at": "2026-04-10T11:24:12.864Z"
+    },
+    {
+      "id": "5961484f-9d46-4545-8139-6874aba0403c",
+      "lead_id": "06898c76-f5d8-4715-ad9f-d59098a7309a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "estimation_review",
+      "new_value": "followup",
+      "details": {
+        "to": "followup",
+        "from": "estimation_review"
+      },
+      "created_at": "2026-04-10T11:24:15.852Z"
+    },
+    {
+      "id": "cec79d49-625d-4b81-8439-bbc188dcfdff",
+      "lead_id": "4f18180c-c455-43a0-898a-1c3be6b56811",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "stage_changed",
+      "field_changed": "stage",
+      "old_value": "estimation_review",
+      "new_value": "negotiation",
+      "details": {
+        "to": "negotiation",
+        "from": "estimation_review"
+      },
+      "created_at": "2026-04-10T11:24:19.616Z"
+    },
+    {
+      "id": "8d11d198-ce35-428f-a5d4-dcd3d96d94b2",
+      "lead_id": "5eef6dd8-cc20-44c4-b1d2-3b8cd729bf8e",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "e commerce website",
+        "client_name": "viji"
+      },
+      "created_at": "2026-04-15T09:47:00.212Z"
+    },
+    {
+      "id": "88a53201-9eee-4b4d-a1ec-3af2ad7d6d5a",
+      "lead_id": "3d1e1f16-b1be-4ca3-bcc6-4f4aaec8dfb8",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "lead_created",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "title": "Teraining redirect App",
+        "client_name": "santhi kumar"
+      },
+      "created_at": "2026-04-15T09:59:23.062Z"
+    },
+    {
+      "id": "1c430316-49da-4904-bf80-7396238b91b9",
+      "lead_id": "5d574bba-db79-438d-b26f-39d5ccdd0a60",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "",
+        "status": "completed",
+        "reminder_title": "demo showcase meeting"
+      },
+      "created_at": "2026-04-17T05:22:47.758Z"
+    },
+    {
+      "id": "7fe799d5-4807-4436-bb4e-5a95cfc2038b",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "action": "reminder_completed",
+      "field_changed": null,
+      "old_value": null,
+      "new_value": null,
+      "details": {
+        "note": "",
+        "status": "completed",
+        "reminder_title": "demo showcase meeting"
+      },
+      "created_at": "2026-04-17T05:22:56.716Z"
+    }
+  ],
+  "lead_notes": [
+    {
+      "id": "82b59f0e-f64c-4a0c-87e7-83db6af3b36c",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "meeting",
+      "content": "Demo prepared and waiting for the leads meetup since lead is busy in handling the interior works of his company",
+      "is_edited": false,
+      "original_content": "Demo prepared and waiting for the leads meetup since lead is busy in handling the interior works of his company",
+      "created_at": "2026-04-03T10:40:33.883Z",
+      "updated_at": "2026-04-03T10:40:33.883Z",
+      "money_collected": false
+    },
+    {
+      "id": "d6b981c3-9fec-4a91-9586-f006fce16d5b",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "They said they will send the reuqimrents to the mail but still didnt revied it yet followup done.",
+      "is_edited": false,
+      "original_content": "They said they will send the reuqimrents to the mail but still didnt revied it yet followup done.",
+      "created_at": "2026-04-06T11:42:48.646Z",
+      "updated_at": "2026-04-06T11:42:48.646Z",
+      "money_collected": false
+    },
+    {
+      "id": "14120c12-4e32-47cb-8f4c-36ab3b984cb1",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "dedmo completed and meeting complted need to share the quotaiaon and get verification",
+      "is_edited": false,
+      "original_content": "dedmo completed and meeting complted need to share the quotaiaon and get verification",
+      "created_at": "2026-04-06T12:40:09.790Z",
+      "updated_at": "2026-04-06T12:40:09.790Z",
+      "money_collected": false
+    },
+    {
+      "id": "4dafe828-8753-41fd-8770-83e2fe25f8dc",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "finalization",
+      "content": "Demo prepared and Presented to client - Jawahar",
+      "is_edited": false,
+      "original_content": "Demo prepared and Presented to client - Jawahar",
+      "created_at": "2026-04-07T08:28:01.313Z",
+      "updated_at": "2026-04-07T08:28:01.313Z",
+      "money_collected": false
+    },
+    {
+      "id": "1be693c4-777c-45f1-9a6d-fb61046be88e",
+      "lead_id": "3afa279b-5e4f-41e0-b26f-b8d6a0ac8974",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "followup",
+      "content": "Asked for Mail id and discussed for quotation",
+      "is_edited": false,
+      "original_content": "Asked for Mail id and discussed for quotation",
+      "created_at": "2026-04-07T08:32:24.140Z",
+      "updated_at": "2026-04-07T08:32:24.140Z",
+      "money_collected": false
+    },
+    {
+      "id": "3e267e58-5c60-41a6-a9a6-47d01cc8f135",
+      "lead_id": "114720ae-dcad-4821-a59d-e7cda99d0973",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "finalization",
+      "content": "Confirmation request message has been drafted and sent-jawahar",
+      "is_edited": false,
+      "original_content": "Confirmation request message has been drafted and sent-jawahar",
+      "created_at": "2026-04-07T08:55:27.593Z",
+      "updated_at": "2026-04-07T08:55:27.593Z",
+      "money_collected": false
+    },
+    {
+      "id": "842a1f80-be5a-4b69-858d-1f2dd7d4da9d",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "finalization",
+      "content": "today Call followup Done not pickjing_ need to follwoup on Tommorow-jawahar",
+      "is_edited": false,
+      "original_content": "today Call followup Done not pickjing_ need to follwoup on Tommorow-jawahar",
+      "created_at": "2026-04-07T08:56:42.398Z",
+      "updated_at": "2026-04-07T08:56:42.398Z",
+      "money_collected": false
+    },
+    {
+      "id": "547967c3-bc84-4e9e-9d1e-75a7cbf3f114",
+      "lead_id": "e9faff6c-e90b-47f8-8fdf-b402b01eef4b",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "meeting",
+      "content": "meetup Scheduled on Wednesday(07/04/2026)",
+      "is_edited": false,
+      "original_content": "meetup Scheduled on Wednesday(07/04/2026)",
+      "created_at": "2026-04-07T09:05:57.734Z",
+      "updated_at": "2026-04-07T09:05:57.734Z",
+      "money_collected": false
+    },
+    {
+      "id": "0059aa7c-7642-4fab-a322-cb7c536515c4",
+      "lead_id": "a9125e25-b882-446a-a1a4-1788e8aeb740",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "negotiation",
+      "content": "Today vsisited and get negotiated on 10 k offer price and said about 5 days confirmation slot-financial year offer and asked for MD availability need to follwoup on tommorow",
+      "is_edited": false,
+      "original_content": "Today vsisited and get negotiated on 10 k offer price and said about 5 days confirmation slot-financial year offer and asked for MD availability need to follwoup on tommorow",
+      "created_at": "2026-04-07T09:08:40.595Z",
+      "updated_at": "2026-04-07T09:08:40.595Z",
+      "money_collected": false
+    },
+    {
+      "id": "7e55f32a-dbe7-404c-ba96-4e0fe348ac0d",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "meeting",
+      "content": "Demo preparation under going by jawahar-Will present on Wednesday-08/04/2026-Jawahar",
+      "is_edited": false,
+      "original_content": "Demo preparation under going by jawahar-Will present on Wednesday-08/04/2026-Jawahar",
+      "created_at": "2026-04-07T09:10:59.522Z",
+      "updated_at": "2026-04-07T09:10:59.522Z",
+      "money_collected": false
+    },
+    {
+      "id": "edddac4a-efb5-464a-bde2-f222b3359705",
+      "lead_id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "meeting",
+      "content": "Need to 2nd level visity by tommorow (shafiq and jawahar)",
+      "is_edited": false,
+      "original_content": "Need to 2nd level visity by tommorow (shafiq and jawahar)",
+      "created_at": "2026-04-07T09:12:36.136Z",
+      "updated_at": "2026-04-07T09:12:36.136Z",
+      "money_collected": false
+    },
+    {
+      "id": "97947521-16fe-40c1-a422-d05a5a4b8697",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "followup",
+      "content": "Demo link prepared - https://gold-wine-delta.vercel.app/",
+      "is_edited": false,
+      "original_content": "Demo link prepared - https://gold-wine-delta.vercel.app/",
+      "created_at": "2026-04-07T09:13:52.241Z",
+      "updated_at": "2026-04-07T09:13:52.241Z",
+      "money_collected": false
+    },
+    {
+      "id": "97112d7e-c602-4949-ba60-9048babc574b",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "followup",
+      "content": "https://gold-wine-delta.vercel.app/",
+      "is_edited": false,
+      "original_content": "https://gold-wine-delta.vercel.app/",
+      "created_at": "2026-04-07T09:14:15.986Z",
+      "updated_at": "2026-04-07T09:14:15.986Z",
+      "money_collected": false
+    },
+    {
+      "id": "b56f75a0-df78-469e-a170-484bcf3b2383",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "followup",
+      "content": "No response from calls - shared our portfolio- cant get the clear requirement",
+      "is_edited": false,
+      "original_content": "No response from calls - shared our portfolio- cant get the clear requirement",
+      "created_at": "2026-04-07T09:15:46.759Z",
+      "updated_at": "2026-04-07T09:15:46.759Z",
+      "money_collected": false
+    },
+    {
+      "id": "fc442247-6f1a-4974-83da-11a44f5659aa",
+      "lead_id": "e2e54cc4-3901-4dae-b232-5ebe1a7533aa",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "followup",
+      "content": "Called and offer initimated today - will confirm by tommorow",
+      "is_edited": false,
+      "original_content": "Called and offer initimated today - will confirm by tommorow",
+      "created_at": "2026-04-07T09:18:14.197Z",
+      "updated_at": "2026-04-07T09:18:14.197Z",
+      "money_collected": false
+    },
+    {
+      "id": "110b88d2-0e42-4008-ab00-c6382197313a",
+      "lead_id": "5c7849fc-189d-431a-9ba0-ef45edc3a6ca",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "folowup done after elections they said us to call back to follow",
+      "is_edited": false,
+      "original_content": "folowup done after elections they said us to call back to follow",
+      "created_at": "2026-04-07T09:52:49.070Z",
+      "updated_at": "2026-04-07T09:52:49.070Z",
+      "money_collected": false
+    },
+    {
+      "id": "a75aebd9-466e-4f09-9b63-823a1b8b228f",
+      "lead_id": "8f58f738-f910-4a6b-8546-426b455c06e5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "shared our potflio cant aable to connect with caall no cleaar communicaaation",
+      "is_edited": false,
+      "original_content": "shared our potflio cant aable to connect with caall no cleaar communicaaation",
+      "created_at": "2026-04-07T10:07:30.512Z",
+      "updated_at": "2026-04-07T10:07:30.512Z",
+      "money_collected": false
+    },
+    {
+      "id": "95177985-6df8-4f89-9b52-f5b436d452a0",
+      "lead_id": "f004dfce-fb9c-4c74-a323-13765d7101c9",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "followup done , in travel will connecct after reaching detination",
+      "is_edited": false,
+      "original_content": "followup done , in travel will connecct after reaching detination",
+      "created_at": "2026-04-07T10:12:41.116Z",
+      "updated_at": "2026-04-07T10:12:41.116Z",
+      "money_collected": false
+    },
+    {
+      "id": "3cd7639f-2ec2-44fa-ad19-7a34af2ee48d",
+      "lead_id": "627ed3ff-d960-40af-a844-fe02a842af12",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "still no upadtion or no meetup arranged aas client no response",
+      "is_edited": false,
+      "original_content": "still no upadtion or no meetup arranged aas client no response",
+      "created_at": "2026-04-07T10:15:18.888Z",
+      "updated_at": "2026-04-07T10:15:18.888Z",
+      "money_collected": false
+    },
+    {
+      "id": "36e46778-2c6a-4d03-9ca9-05d0ad7cdbf5",
+      "lead_id": "f3e9ae6d-53bd-4a33-ba8f-e60e496cfce5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "followup",
+      "content": "no clinets available for them to present the app projeccts to us\nonce they get the project they will assign us",
+      "is_edited": false,
+      "original_content": "no clinets available for them to present the app projeccts to us\nonce they get the project they will assign us",
+      "created_at": "2026-04-07T10:16:24.794Z",
+      "updated_at": "2026-04-07T10:16:24.794Z",
+      "money_collected": false
+    },
+    {
+      "id": "f656df97-8465-40ed-a832-2476bfaf2547",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "finalization",
+      "content": "demo and qoutaion work completed  shared and wating for leads paymesnt",
+      "is_edited": false,
+      "original_content": "demo and qoutaion work completed  shared and wating for leads paymesnt",
+      "created_at": "2026-04-07T10:22:13.517Z",
+      "updated_at": "2026-04-07T10:22:13.517Z",
+      "money_collected": false
+    },
+    {
+      "id": "357e1f1c-1145-4a33-a752-e829808dc5a5",
+      "lead_id": "97c2bf60-fb31-4043-805f-23e5995fbc41",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "finalization",
+      "content": "leaad stuck with a personal problems once resolved he will continue with us again",
+      "is_edited": false,
+      "original_content": "leaad stuck with a personal problems once resolved he will continue with us again",
+      "created_at": "2026-04-07T10:22:52.629Z",
+      "updated_at": "2026-04-07T10:22:52.629Z",
+      "money_collected": false
+    }
+  ],
+  "note_edits": [],
+  "reminders": [
+    {
+      "id": "9f277be2-8535-4b39-bedb-967f39fa7ada",
+      "lead_id": "59983945-037f-4f36-ac63-c9eb96534cd5",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "meeting",
+      "title": "followup",
+      "description": null,
+      "remind_at": "2026-04-06T10:51:00.000Z",
+      "is_completed": true,
+      "completed_at": "2026-04-06T12:01:13.203Z",
+      "created_at": "2026-04-03T10:52:22.183Z",
+      "type": "general",
+      "recurrence": "none",
+      "is_notified": true,
+      "completion_status": "completed",
+      "completion_note": "completed the meet and requested for quotation .",
+      "last_notified_at": "2026-04-06T10:36:14.315Z"
+    },
+    {
+      "id": "bab6c667-4ac4-4df8-82a1-6fc8fdc6feb2",
+      "lead_id": "1ec866ec-08b3-47d7-a780-0b3053517a01",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "meeting",
+      "title": "webiste demo and quotiaon meet",
+      "description": null,
+      "remind_at": "2026-04-07T12:01:00.000Z",
+      "is_completed": true,
+      "completed_at": "2026-04-07T07:02:35.821Z",
+      "created_at": "2026-04-06T12:01:48.840Z",
+      "type": "general",
+      "recurrence": "none",
+      "is_notified": false,
+      "completion_status": "completed",
+      "completion_note": "complteedd",
+      "last_notified_at": null
+    },
+    {
+      "id": "d1be8c69-0ab1-4437-afb8-a00286107264",
+      "lead_id": "b716f26e-4936-49ef-9968-1b8e96d1d43d",
+      "user_id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+      "stage": "meeting",
+      "title": "meetup with jawahar sir",
+      "description": "regarding convertion visit",
+      "remind_at": "2026-04-08T03:30:00.000Z",
+      "is_completed": false,
+      "completed_at": null,
+      "created_at": "2026-04-07T09:11:57.786Z",
+      "type": "general",
+      "recurrence": "none",
+      "is_notified": true,
+      "completion_status": "completed",
+      "completion_note": null,
+      "last_notified_at": "2026-04-08T03:15:23.908Z"
+    },
+    {
+      "id": "75214181-6b03-4000-979a-ea6f45e3c385",
+      "lead_id": "4319f888-be34-4c95-a6c1-d0f706ed1262",
+      "user_id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+      "stage": "finalization",
+      "title": "Nelson-eaiuty palace",
+      "description": "followup",
+      "remind_at": "2026-04-08T03:30:00.000Z",
+      "is_completed": false,
+      "completed_at": null,
+      "created_at": "2026-04-07T08:57:09.444Z",
+      "type": "general",
+      "recurrence": "daily",
+      "is_notified": true,
+      "completion_status": "completed",
+      "completion_note": null,
+      "last_notified_at": "2026-04-08T03:15:24.459Z"
+    },
+    {
+      "id": "8e252e8c-8992-4099-8d03-866f7f80eeea",
+      "lead_id": "5d574bba-db79-438d-b26f-39d5ccdd0a60",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "meeting",
+      "title": "demo showcase meeting",
+      "description": null,
+      "remind_at": "2026-04-08T11:32:00.000Z",
+      "is_completed": true,
+      "completed_at": "2026-04-17T05:22:47.758Z",
+      "created_at": "2026-04-07T11:32:13.759Z",
+      "type": "general",
+      "recurrence": "none",
+      "is_notified": true,
+      "completion_status": "completed",
+      "completion_note": null,
+      "last_notified_at": "2026-04-08T11:17:11.471Z"
+    },
+    {
+      "id": "916272a2-a83d-405b-bb10-95ffc542aca8",
+      "lead_id": "6b103f71-a41f-4241-88e1-129789062c4a",
+      "user_id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+      "stage": "meeting",
+      "title": "demo showcase meeting",
+      "description": null,
+      "remind_at": "2026-04-08T11:32:00.000Z",
+      "is_completed": true,
+      "completed_at": "2026-04-17T05:22:56.716Z",
+      "created_at": "2026-04-07T11:32:41.968Z",
+      "type": "general",
+      "recurrence": "none",
+      "is_notified": true,
+      "completion_status": "completed",
+      "completion_note": null,
+      "last_notified_at": "2026-04-08T11:17:10.901Z"
+    }
+  ]
+}

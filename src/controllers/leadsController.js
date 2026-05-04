@@ -1,209 +1,253 @@
 const pool = require('../config/db');
 
-const VALID_STAGES = ['meeting', 'followup', 'negotiation', 'estimation_review', 'finalization', 'cancelled'];
+// Helper to build filtering queries
+const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) => {
+  let paramIdx = params.length + 1;
 
-// Log an action to lead_history
-const logHistory = async (client, leadId, userId, action, details = {}, fieldChanged = null, oldValue = null, newValue = null) => {
-  await client.query(
-    `INSERT INTO lead_history (lead_id, user_id, action, field_changed, old_value, new_value, details)
-     VALUES ($1, $2, $3, $4, $5, $6, $7)`,
-    [leadId, userId, action, fieldChanged, oldValue, newValue, JSON.stringify(details)]
-  );
+  // Always filter by board
+  baseQuery += ` AND l.board_id = $${paramIdx}`;
+  params.push(boardId);
+  paramIdx++;
+
+  if (userRole === 'visitor') {
+    baseQuery += ` AND l.assigned_to = $${paramIdx}`;
+    params.push(userId);
+    paramIdx++;
+  }
+
+  if (query.stage) {
+    baseQuery += ` AND l.stage = $${paramIdx}`;
+    params.push(query.stage);
+    paramIdx++;
+  }
+
+  if (query.search) {
+    baseQuery += ` AND (l.title ILIKE $${paramIdx} OR l.client_name ILIKE $${paramIdx} OR l.client_email ILIKE $${paramIdx} OR l.client_company ILIKE $${paramIdx})`;
+    params.push(`%${query.search}%`);
+    paramIdx++;
+  }
+
+  return { sql: baseQuery, params };
 };
 
-// GET /api/leads - All users
+// GET /api/leads
 const getLeads = async (req, res, next) => {
   try {
-    const { stage, assigned_to, search } = req.query;
-    let query = `
-      SELECT l.*,
-        u1.name as assigned_to_name, u1.email as assigned_to_email,
-        u2.name as created_by_name,
-        (SELECT COUNT(*) FROM lead_notes ln WHERE ln.lead_id = l.id) as notes_count,
-        (SELECT COUNT(*) FROM reminders r WHERE r.lead_id = l.id AND r.is_completed = false AND r.remind_at > NOW()) as pending_reminders
+    let sql = `
+      SELECT l.*, 
+        u1.name as assigned_name, 
+        u2.name as creator_name,
+        (SELECT COUNT(*) FROM lead_notes ln WHERE ln.lead_id = l.id AND ln.money_collected = true) as money_collected_notes
       FROM leads l
       LEFT JOIN users u1 ON l.assigned_to = u1.id
-      LEFT JOIN users u2 ON l.created_by = u2.id
+      JOIN users u2 ON l.created_by = u2.id
       WHERE 1=1
     `;
-    const params = [];
-    let idx = 1;
+    let params = [];
 
-    if (stage) { query += ` AND l.stage = $${idx++}`; params.push(stage); }
-    
-    // Role-based visibility
-    if (req.user.role === 'visitor') {
-      query += ` AND l.assigned_to = $${idx++}`;
-      params.push(req.user.id);
-    } else if (assigned_to) {
-      query += ` AND l.assigned_to = $${idx++}`;
-      params.push(assigned_to);
-    }
+    const filtered = buildFilterQuery(req.query, sql, params, req.user.role, req.user.id, req.boardId);
+    filtered.sql += ` ORDER BY l.created_at DESC`;
 
-    if (search) {
-      query += ` AND (l.title ILIKE $${idx} OR l.client_name ILIKE $${idx} OR l.client_company ILIKE $${idx})`;
-      params.push(`%${search}%`); idx++;
-    }
-
-    query += ' ORDER BY l.updated_at DESC';
-    const result = await pool.query(query, params);
+    const result = await pool.query(filtered.sql, filtered.params);
     res.json({ leads: result.rows });
   } catch (err) {
     next(err);
   }
 };
 
-// GET /api/leads/:id - Single lead with full history
-const getLead = async (req, res, next) => {
+// POST /api/leads
+const createLead = async (req, res, next) => {
+  const client = await pool.connect();
   try {
-    const { id } = req.params;
-    const lead = await pool.query(
-      `SELECT l.*,
-        u1.name as assigned_to_name, u1.email as assigned_to_email,
-        u2.name as created_by_name
-       FROM leads l
-       LEFT JOIN users u1 ON l.assigned_to = u1.id
-       LEFT JOIN users u2 ON l.created_by = u2.id
-       WHERE l.id = $1`,
-      [id]
-    );
-    if (!lead.rows[0]) return res.status(404).json({ message: 'Lead not found' });
+    await client.query('BEGIN');
+    const { title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to, custom_data } = req.body;
 
-    // Role-based access control
-    if (req.user.role === 'visitor' && lead.rows[0].assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });
+    let finalTitle = title ? title.trim() : 'Unnamed Lead';
+    let finalClientName = client_name ? client_name.trim() : 'Unknown Client';
+
+    let finalAssignedTo = assigned_to;
+    if (req.user.role === 'visitor') finalAssignedTo = req.user.id; // visitors can only assign to self
+    else if (!finalAssignedTo) finalAssignedTo = null; // unassigned
+
+    let firstStage = 'meeting';
+    const settingsResult = await client.query("SELECT value FROM settings WHERE board_id = $1 AND key = 'stages'", [req.boardId]);
+    if (settingsResult.rows[0]) {
+      try {
+        const stages = typeof settingsResult.rows[0].value === 'string' ? JSON.parse(settingsResult.rows[0].value) : settingsResult.rows[0].value;
+        if (stages && stages.length > 0) firstStage = stages[0].id;
+      } catch (e) { console.error('Error parsing stages', e); }
     }
 
-    const history = await pool.query(
-      `SELECT lh.*, u.name as user_name, u.role as user_role
-       FROM lead_history lh
-       JOIN users u ON lh.user_id = u.id
-       WHERE lh.lead_id = $1
-       ORDER BY lh.created_at DESC`,
-      [id]
+    const result = await client.query(
+      `INSERT INTO leads (title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to, created_by, board_id, custom_data, stage)
+       VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13) RETURNING *`,
+      [
+        finalTitle, finalClientName, client_email?.trim() || null, 
+        client_phone?.trim() || null, client_company?.trim() || null, 
+        description?.trim() || null, priority || 'medium', value || null, 
+        finalAssignedTo, req.user.id, req.boardId, custom_data || {}, firstStage
+      ]
     );
 
-    const notes = await pool.query(
-      `SELECT ln.*,
-        u.name as user_name, u.role as user_role,
-        json_agg(
-          json_build_object('id', ne.id, 'previous_content', ne.previous_content, 'new_content', ne.new_content, 'edited_at', ne.edited_at, 'editor_name', ue.name)
-          ORDER BY ne.edited_at DESC
-        ) FILTER (WHERE ne.id IS NOT NULL) as edit_history
+    const leadId = result.rows[0].id;
+
+    await client.query(
+      `INSERT INTO lead_history (lead_id, user_id, action, details)
+       VALUES ($1, $2, 'created', $3)`,
+      [leadId, req.user.id, JSON.stringify({ title: finalTitle, initial_stage: firstStage })]
+    );
+
+    // Initial default note
+    await client.query(
+      `INSERT INTO lead_notes (lead_id, user_id, stage, content, original_content)
+       VALUES ($1, $2, $3, $4, $4)`,
+      [leadId, req.user.id, firstStage, `Lead created: ${title}`]
+    );
+
+    await client.query('COMMIT');
+
+    // Email notification if assigned
+    if (finalAssignedTo && finalAssignedTo !== req.user.id) {
+      const { sendActionEmail } = require('../services/email');
+      sendActionEmail(finalAssignedTo, leadId, `New Lead Assigned: ${title}`, `You have been assigned a new lead.`, `Client: ${client_name}`);
+    }
+
+    const fullLead = await pool.query(
+      `SELECT l.*, u1.name as assigned_name, u2.name as creator_name
+       FROM leads l LEFT JOIN users u1 ON l.assigned_to = u1.id JOIN users u2 ON l.created_by = u2.id WHERE l.id = $1`,
+      [leadId]
+    );
+    res.status(201).json({ lead: fullLead.rows[0] });
+  } catch (err) {
+    await client.query('ROLLBACK');
+    next(err);
+  } finally {
+    client.release();
+  }
+};
+
+// GET /api/leads/:id
+const getLead = async (req, res, next) => {
+  try {
+    const result = await pool.query(
+      `SELECT l.*, u1.name as assigned_name, u2.name as creator_name
+       FROM leads l
+       LEFT JOIN users u1 ON l.assigned_to = u1.id
+       JOIN users u2 ON l.created_by = u2.id
+       WHERE l.id = $1 AND l.board_id = $2`,
+      [req.params.id, req.boardId]
+    );
+
+    if (!result.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
+    const lead = result.rows[0];
+
+    if (req.user.role === 'visitor' && lead.assigned_to !== req.user.id) {
+      return res.status(403).json({ message: 'Access denied' });
+    }
+
+    const historyRes = await pool.query(
+      `SELECT h.*, u.name as user_name 
+       FROM lead_history h JOIN users u ON h.user_id = u.id 
+       WHERE h.lead_id = $1 ORDER BY h.created_at DESC`,
+      [lead.id]
+    );
+
+    const notesRes = await pool.query(
+      `SELECT ln.*, u.name as user_name, u.role as user_role,
+        json_agg(json_build_object('id', ne.id, 'previous_content', ne.previous_content, 'new_content', ne.new_content, 'edited_at', ne.edited_at, 'editor_name', ue.name) ORDER BY ne.edited_at DESC) FILTER (WHERE ne.id IS NOT NULL) as edit_history
        FROM lead_notes ln
        JOIN users u ON ln.user_id = u.id
        LEFT JOIN note_edits ne ON ne.note_id = ln.id
        LEFT JOIN users ue ON ne.user_id = ue.id
-       WHERE ln.lead_id = $1
-       GROUP BY ln.id, u.name, u.role
-       ORDER BY ln.created_at DESC`,
-      [id]
+       WHERE ln.lead_id = $1 GROUP BY ln.id, u.name, u.role ORDER BY ln.created_at DESC`,
+      [lead.id]
     );
 
-    const reminders = await pool.query(
+    const remindersRes = await pool.query(
       `SELECT r.*, u.name as user_name
        FROM reminders r
        JOIN users u ON r.user_id = u.id
-       WHERE r.lead_id = $1
-       ORDER BY r.remind_at ASC`,
-      [id]
+       WHERE r.lead_id = $1 ORDER BY r.remind_at ASC`,
+      [lead.id]
     );
 
-    res.json({
-      lead: lead.rows[0],
-      history: history.rows,
-      notes: notes.rows,
-      reminders: reminders.rows,
+    res.json({ 
+      lead, 
+      history: historyRes.rows, 
+      notes: notesRes.rows, 
+      reminders: remindersRes.rows 
     });
   } catch (err) {
     next(err);
   }
 };
 
-// POST /api/leads - Create lead
-const createLead = async (req, res, next) => {
-  const client = await pool.connect();
-  try {
-    await client.query('BEGIN');
-    const { title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to } = req.body;
-
-    if (!title || !client_name) return res.status(400).json({ message: 'Title and client name are required' });
-
-    const result = await client.query(
-      `INSERT INTO leads (title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to, created_by)
-       VALUES ($1,$2,$3,$4,$5,$6,$7,$8,$9,$10) RETURNING *`,
-      [title.trim(), client_name.trim(), client_email, client_phone, client_company, description, priority || 'medium', value || null, assigned_to || req.user.id, req.user.id]
-    );
-
-    const lead = result.rows[0];
-    await logHistory(client, lead.id, req.user.id, 'lead_created', { title: lead.title, client_name: lead.client_name });
-
-    await client.query('COMMIT');
-
-    // Notify Assignee
-    const { sendActionEmail } = require('../services/email');
-    sendActionEmail(lead.assigned_to, lead.id, `New Lead Assigned: ${lead.title}`, `You have been assigned to a new lead: <strong>${lead.title}</strong>`, `Client: ${lead.client_name}<br>Description: ${lead.description || 'No description'}`);
-
-    const full = await pool.query(
-      `SELECT l.*, u1.name as assigned_to_name, u2.name as created_by_name
-       FROM leads l LEFT JOIN users u1 ON l.assigned_to = u1.id LEFT JOIN users u2 ON l.created_by = u2.id
-       WHERE l.id = $1`, [lead.id]
-    );
-    res.status(201).json({ lead: full.rows[0] });
-  } catch (err) {
-    await client.query('ROLLBACK');
-    next(err);
-  } finally {
-    client.release();
-  }
-};
-
-// PUT /api/leads/:id - Update lead fields
+// PUT /api/leads/:id
 const updateLead = async (req, res, next) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
     const { id } = req.params;
-    const current = await client.query('SELECT * FROM leads WHERE id = $1', [id]);
-    if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found' });
-    const lead = current.rows[0];
+    const { title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to, custom_data } = req.body;
 
-    // Role-based access control
-    if (req.user.role === 'visitor' && lead.assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });
+    const current = await client.query('SELECT * FROM leads WHERE id = $1 AND board_id = $2', [id, req.boardId]);
+    if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
+
+    if (req.user.role === 'visitor' && current.rows[0].assigned_to !== req.user.id) {
+      return res.status(403).json({ message: 'Access denied' });
     }
 
-    const fields = ['title', 'client_name', 'client_email', 'client_phone', 'client_company', 'description', 'priority', 'value', 'assigned_to'];
-    const updates = [];
-    const params = [];
-    let idx = 1;
+    let finalAssignedTo = assigned_to;
+    if (req.user.role === 'visitor') finalAssignedTo = current.rows[0].assigned_to;
 
-    for (const field of fields) {
-      if (req.body[field] !== undefined && req.body[field] !== lead[field]) {
-        updates.push(`${field} = $${idx++}`);
-        params.push(req.body[field]);
-        await logHistory(client, id, req.user.id, 'field_updated', {}, field, String(lead[field] ?? ''), String(req.body[field] ?? ''));
+    const updates = [];
+    const changedFields = [];
+    const params = [];
+    let paramIdx = 1;
+    
+    // Compare and build history
+    if (title && title !== current.rows[0].title) { updates.push(`title = $${paramIdx++}`); params.push(title); changedFields.push('title'); }
+    if (client_name && client_name !== current.rows[0].client_name) { updates.push(`client_name = $${paramIdx++}`); params.push(client_name); changedFields.push('client_name'); }
+    if (client_email !== undefined && client_email !== current.rows[0].client_email) { updates.push(`client_email = $${paramIdx++}`); params.push(client_email || null); changedFields.push('client_email'); }
+    if (client_phone !== undefined && client_phone !== current.rows[0].client_phone) { updates.push(`client_phone = $${paramIdx++}`); params.push(client_phone || null); changedFields.push('client_phone'); }
+    if (client_company !== undefined && client_company !== current.rows[0].client_company) { updates.push(`client_company = $${paramIdx++}`); params.push(client_company || null); changedFields.push('client_company'); }
+    if (description !== undefined && description !== current.rows[0].description) { updates.push(`description = $${paramIdx++}`); params.push(description || null); changedFields.push('description'); }
+    if (priority && priority !== current.rows[0].priority) { updates.push(`priority = $${paramIdx++}`); params.push(priority); changedFields.push('priority'); }
+    if (value !== undefined && value != current.rows[0].value) { updates.push(`value = $${paramIdx++}`); params.push(value || null); changedFields.push('value'); }
+    if (finalAssignedTo !== undefined && finalAssignedTo !== current.rows[0].assigned_to) { updates.push(`assigned_to = $${paramIdx++}`); params.push(finalAssignedTo || null); changedFields.push('assigned_to'); }
+    if (custom_data !== undefined) { 
+      // Compare custom_data JSON
+      if (JSON.stringify(custom_data) !== JSON.stringify(current.rows[0].custom_data)) {
+        updates.push(`custom_data = $${paramIdx++}`); 
+        params.push(custom_data); 
+        changedFields.push('custom_data'); 
       }
     }
 
-    if (updates.length === 0) {
-      await client.query('ROLLBACK');
-      return res.json({ lead });
+    if (updates.length > 0) {
+      params.push(id);
+      await client.query(`UPDATE leads SET ${updates.join(', ')} WHERE id = $${paramIdx}`, params);
+      
+      await client.query(
+        `INSERT INTO lead_history (lead_id, user_id, action, details) VALUES ($1, $2, 'updated', $3)`,
+        [id, req.user.id, JSON.stringify({ fields: changedFields })]
+      );
     }
-
-    params.push(id);
-    const result = await client.query(
-      `UPDATE leads SET ${updates.join(', ')} WHERE id = $${idx} RETURNING *`,
-      params
-    );
 
     await client.query('COMMIT');
     
-    // Notify Assignee
-    const { sendActionEmail } = require('../services/email');
-    sendActionEmail(result.rows[0].assigned_to, id, `Lead Updated: ${result.rows[0].title}`, `The lead <strong>${result.rows[0].title}</strong> has been updated.`, `Fields modified: ${updates.map(u => u.split(' =')[0]).join(', ')}`);
+    // Notify if assignee changed
+    if (finalAssignedTo && finalAssignedTo !== current.rows[0].assigned_to) {
+      const { sendActionEmail } = require('../services/email');
+      sendActionEmail(finalAssignedTo, id, `Lead Re-assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you.`, `Client: ${current.rows[0].client_name}`);
+    }
 
-    res.json({ lead: result.rows[0] });
+    const fullLead = await pool.query(
+      `SELECT l.*, u1.name as assigned_name, u2.name as creator_name
+       FROM leads l LEFT JOIN users u1 ON l.assigned_to = u1.id JOIN users u2 ON l.created_by = u2.id WHERE l.id = $1`,
+      [id]
+    );
+    res.json({ lead: fullLead.rows[0] });
   } catch (err) {
     await client.query('ROLLBACK');
     next(err);
@@ -212,41 +256,68 @@ const updateLead = async (req, res, next) => {
   }
 };
 
-// PUT /api/leads/:id/stage - Move stage (Kanban drag)
+// PUT /api/leads/:id/stage
 const moveStage = async (req, res, next) => {
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
     const { id } = req.params;
-    const { stage } = req.body;
+    const { new_stage, note } = req.body;
 
-    if (!VALID_STAGES.includes(stage))
-      return res.status(400).json({ message: 'Invalid stage' });
+    if (!new_stage) return res.status(400).json({ message: 'new_stage is required' });
 
-    const current = await client.query('SELECT * FROM leads WHERE id = $1', [id]);
-    if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found' });
+    const current = await client.query('SELECT * FROM leads WHERE id = $1 AND board_id = $2', [id, req.boardId]);
+    if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
 
-    // Role-based access control
     if (req.user.role === 'visitor' && current.rows[0].assigned_to !== req.user.id) {
-      return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });
+      return res.status(403).json({ message: 'Access denied' });
     }
 
     const oldStage = current.rows[0].stage;
-    if (oldStage === stage) return res.status(400).json({ message: 'Lead already in this stage' });
+    if (oldStage === new_stage) {
+      return res.status(400).json({ message: 'Lead is already in this stage' });
+    }
 
-    const result = await client.query(
-      'UPDATE leads SET stage = $1 WHERE id = $2 RETURNING *',
-      [stage, id]
+    // Update lead stage
+    await client.query('UPDATE leads SET stage = $1 WHERE id = $2', [new_stage, id]);
+
+    // History log
+    await client.query(
+      `INSERT INTO lead_history (lead_id, user_id, action, field_changed, old_value, new_value, details)
+       VALUES ($1, $2, 'stage_changed', 'stage', $3, $4, $5)`,
+      [id, req.user.id, oldStage, new_stage, JSON.stringify({ note })]
     );
 
-    await logHistory(client, id, req.user.id, 'stage_changed', { from: oldStage, to: stage }, 'stage', oldStage, stage);
+    // If there's an optional note, add it
+    if (note && note.trim()) {
+      await client.query(
+        `INSERT INTO lead_notes (lead_id, user_id, stage, content, original_content)
+         VALUES ($1, $2, $3, $4, $4)`,
+        [id, req.user.id, new_stage, note.trim()]
+      );
+    }
+
     await client.query('COMMIT');
+    
+    // Notify Manager/Admin of stage changes (could refine to only specific stages later)
+    if (['negotiation', 'estimation_review', 'finalization'].includes(new_stage)) {
+       const { sendActionEmail } = require('../services/email');
+       const managers = await client.query(`
+         SELECT u.id, u.email FROM users u 
+         JOIN board_users bu ON bu.user_id = u.id
+         WHERE bu.board_id = $1 AND (u.role = 'admin' OR bu.role = 'admin' OR u.role = 'manager')
+       `, [req.boardId]);
+       for(const m of managers.rows) {
+         sendActionEmail(m.id, id, `Lead Stage Updated: ${current.rows[0].title}`, `Lead moved to <strong>${new_stage}</strong> by ${req.user.name}.`, `Client: ${current.rows[0].client_name}`);
+       }
+    }
 
-    // Notify Assignee
-    const { sendActionEmail } = require('../services/email');
-    sendActionEmail(result.rows[0].assigned_to, id, `Lead Updated: ${result.rows[0].title} moved to ${stage}`, `The lead <strong>${result.rows[0].title}</strong> has been moved to a new stage.`, `From: ${oldStage}<br>To: ${stage}`);
-
-    res.json({ lead: result.rows[0], from: oldStage, to: stage });
+    const fullLead = await pool.query(
+      `SELECT l.*, u1.name as assigned_name, u2.name as creator_name
+       FROM leads l LEFT JOIN users u1 ON l.assigned_to = u1.id JOIN users u2 ON l.created_by = u2.id WHERE l.id = $1`,
+      [id]
+    );
+    res.json({ lead: fullLead.rows[0] });
   } catch (err) {
     await client.query('ROLLBACK');
     next(err);
@@ -255,4 +326,4 @@ const moveStage = async (req, res, next) => {
   }
 };
 
-module.exports = { getLeads, getLead, createLead, updateLead, moveStage };
+module.exports = { getLeads, createLead, getLead, updateLead, moveStage };

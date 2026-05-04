@@ -34,8 +34,10 @@ const addNote = async (req, res, next) => {
 
     if (!content?.trim()) return res.status(400).json({ message: 'Note content is required' });
 
-    const leadCheck = await client.query('SELECT id, stage, assigned_to FROM leads WHERE id = $1', [leadId]);
-    if (!leadCheck.rows[0]) return res.status(404).json({ message: 'Lead not found' });
+    const leadCheck = await client.query('SELECT id, stage, assigned_to, board_id FROM leads WHERE id = $1', [leadId]);
+    if (!leadCheck.rows[0] || leadCheck.rows[0].board_id !== req.boardId) {
+      return res.status(404).json({ message: 'Lead not found or access denied' });
+    }
 
     if (req.user.role === 'visitor' && leadCheck.rows[0].assigned_to !== req.user.id) {
       return res.status(403).json({ message: 'Access denied: Lead not assigned to you' });
