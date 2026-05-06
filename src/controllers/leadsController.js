@@ -293,10 +293,10 @@ const updateLead = async (req, res, next) => {
 
     await client.query('COMMIT');
     
-    // Notify if assignee changed
+    // Notify if system assignee changed
     if (finalAssignedTo && finalAssignedTo !== current.rows[0].assigned_to) {
       const { sendActionEmail } = require('../services/email');
-      sendActionEmail(finalAssignedTo, id, `Lead Assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you. Please check it once.`, `<strong>Lead:</strong> ${current.rows[0].title}<br><strong>Client:</strong> ${current.rows[0].client_name}`);
+      sendActionEmail(finalAssignedTo, id, `Lead Assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you. Please check it once.`, { leadTitle: current.rows[0].title, clientName: current.rows[0].client_name, actionBy: req.user.name || 'System' });
 
       // Also send push notification to the assignee
       try {
@@ -312,6 +312,50 @@ const updateLead = async (req, res, next) => {
         }
       } catch (pushErr) {
         console.error('Push notification error on assignment:', pushErr);
+      }
+    }
+
+    // Notify if custom user_dropdown assignee changed (e.g. custom "Assigne" field)
+    if (custom_data !== undefined) {
+      const oldCustom = current.rows[0].custom_data || {};
+      const newCustom = custom_data || {};
+      // Re-check field types for user_dropdown
+      let _fieldTypes = {};
+      try {
+        const _sRes = await pool.query("SELECT value FROM settings WHERE board_id = $1 AND key = 'custom_fields'", [req.boardId]);
+        if (_sRes.rows[0]) {
+          const _fields = Array.isArray(_sRes.rows[0].value) ? _sRes.rows[0].value : JSON.parse(_sRes.rows[0].value);
+          _fields.forEach(f => { _fieldTypes[f.id] = f.type; });
+        }
+      } catch (e) {}
+
+      for (const fieldId of Object.keys(_fieldTypes)) {
+        if (_fieldTypes[fieldId] === 'user_dropdown') {
+          const oldUserId = oldCustom[fieldId];
+          const newUserId = newCustom[fieldId];
+          if (newUserId && newUserId !== oldUserId) {
+            // Send email to the newly assigned user
+            const { sendActionEmail } = require('../services/email');
+            sendActionEmail(newUserId, id, `Lead Assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you. Please check it once.`, { leadTitle: current.rows[0].title, clientName: current.rows[0].client_name, actionBy: req.user.name || 'System' });
+            console.log(`📧 Assignment email triggered for custom field ${fieldId} → user ${newUserId}`);
+
+            // Push notification
+            try {
+              const aRes = await pool.query('SELECT fcm_token FROM users WHERE id = $1', [newUserId]);
+              if (aRes.rows[0]?.fcm_token) {
+                const { sendPushNotification } = require('../services/fcm');
+                await sendPushNotification(
+                  aRes.rows[0].fcm_token,
+                  `Lead Assigned to You`,
+                  `${current.rows[0].title} - Client: ${current.rows[0].client_name}`,
+                  { url: `/leads/${id}` }
+                );
+              }
+            } catch (pushErr) {
+              console.error('Push notification error on custom assignment:', pushErr);
+            }
+          }
+        }
       }
     }
 

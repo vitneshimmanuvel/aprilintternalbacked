@@ -86,14 +86,18 @@ const createReminder = async (req, res, next) => {
 
     await client.query('COMMIT');
 
+    // Get lead details for email
+    const leadDetails = await pool.query('SELECT title, client_name FROM leads WHERE id = $1', [leadId]);
+    const leadInfo = leadDetails.rows[0] || {};
+
     // Notify Creator that a reminder was scheduled
     const { sendActionEmail } = require('../services/email');
     sendActionEmail(
       req.user.id, 
       leadId, 
-      `New Reminder Scheduled`, 
-      `A new reminder was scheduled.`, 
-      `<strong>Title:</strong> ${title.trim()}<br><strong>Time:</strong> ${new Date(remind_at).toLocaleString()}`
+      `Reminder Scheduled: ${leadInfo.title || 'Lead'}`, 
+      `A new reminder has been scheduled.`, 
+      { leadTitle: leadInfo.title, clientName: leadInfo.client_name, actionBy: req.user.name || 'System', extraInfo: `${title.trim()} — ${new Date(remind_at).toLocaleString()}` }
     );
 
     // Also notify the assignee if they are different
@@ -101,9 +105,9 @@ const createReminder = async (req, res, next) => {
       sendActionEmail(
         leadCheck.rows[0].assigned_to, 
         leadId, 
-        `New Reminder Scheduled`, 
-        `A new reminder was scheduled for your lead.`, 
-        `<strong>Title:</strong> ${title.trim()}<br><strong>Time:</strong> ${new Date(remind_at).toLocaleString()}`
+        `Reminder Scheduled: ${leadInfo.title || 'Lead'}`, 
+        `A new reminder has been scheduled for a lead assigned to you.`, 
+        { leadTitle: leadInfo.title, clientName: leadInfo.client_name, actionBy: req.user.name || 'System', extraInfo: `${title.trim()} — ${new Date(remind_at).toLocaleString()}` }
       );
     }
 
