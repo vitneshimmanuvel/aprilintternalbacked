@@ -10,7 +10,8 @@ const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) =
   paramIdx++;
 
   if (query.assigned_to) {
-    baseQuery += ` AND l.assigned_to = $${paramIdx}`;
+    // Filter by BOTH system assigned_to column AND any user_dropdown custom field in custom_data
+    baseQuery += ` AND (l.assigned_to = $${paramIdx} OR l.custom_data::text LIKE '%' || $${paramIdx} || '%')`;
     params.push(query.assigned_to);
     paramIdx++;
   }
@@ -48,7 +49,10 @@ const getLeads = async (req, res, next) => {
     const filtered = buildFilterQuery(req.query, sql, params, req.user.role, req.user.id, req.boardId);
     filtered.sql += ` ORDER BY l.created_at DESC`;
 
+    console.log('[FILTER DEBUG] query params:', req.query, '| board:', req.boardId, '| SQL params:', filtered.params);
+
     const result = await pool.query(filtered.sql, filtered.params);
+    console.log('[FILTER DEBUG] returned', result.rows.length, 'leads');
     res.json({ leads: result.rows });
   } catch (err) {
     next(err);
@@ -194,22 +198,83 @@ const updateLead = async (req, res, next) => {
 
     const updates = [];
     const changedFields = [];
+    const changeDetails = []; // Detailed changes with old/new values
     const params = [];
     let paramIdx = 1;
     
+    // Helper to record a change
+    const recordChange = (fieldLabel, oldVal, newVal) => {
+      changeDetails.push({ field: fieldLabel, from: oldVal || '—', to: newVal || '—' });
+    };
+
     // Compare and build history
-    if (title && title !== current.rows[0].title) { updates.push(`title = $${paramIdx++}`); params.push(title); changedFields.push('title'); }
-    if (client_name && client_name !== current.rows[0].client_name) { updates.push(`client_name = $${paramIdx++}`); params.push(client_name); changedFields.push('client_name'); }
-    if (client_email !== undefined && client_email !== current.rows[0].client_email) { updates.push(`client_email = $${paramIdx++}`); params.push(client_email || null); changedFields.push('client_email'); }
-    if (client_phone !== undefined && client_phone !== current.rows[0].client_phone) { updates.push(`client_phone = $${paramIdx++}`); params.push(client_phone || null); changedFields.push('client_phone'); }
-    if (client_company !== undefined && client_company !== current.rows[0].client_company) { updates.push(`client_company = $${paramIdx++}`); params.push(client_company || null); changedFields.push('client_company'); }
-    if (description !== undefined && description !== current.rows[0].description) { updates.push(`description = $${paramIdx++}`); params.push(description || null); changedFields.push('description'); }
-    if (priority && priority !== current.rows[0].priority) { updates.push(`priority = $${paramIdx++}`); params.push(priority); changedFields.push('priority'); }
-    if (value !== undefined && value != current.rows[0].value) { updates.push(`value = $${paramIdx++}`); params.push(value || null); changedFields.push('value'); }
-    if (finalAssignedTo !== undefined && finalAssignedTo !== current.rows[0].assigned_to) { updates.push(`assigned_to = $${paramIdx++}`); params.push(finalAssignedTo || null); changedFields.push('assigned_to'); }
+    if (title && title !== current.rows[0].title) { updates.push(`title = $${paramIdx++}`); params.push(title); changedFields.push('title'); recordChange('Title', current.rows[0].title, title); }
+    if (client_name && client_name !== current.rows[0].client_name) { updates.push(`client_name = $${paramIdx++}`); params.push(client_name); changedFields.push('client_name'); recordChange('Client Name', current.rows[0].client_name, client_name); }
+    if (client_email !== undefined && client_email !== current.rows[0].client_email) { updates.push(`client_email = $${paramIdx++}`); params.push(client_email || null); changedFields.push('client_email'); recordChange('Client Email', current.rows[0].client_email, client_email); }
+    if (client_phone !== undefined && client_phone !== current.rows[0].client_phone) { updates.push(`client_phone = $${paramIdx++}`); params.push(client_phone || null); changedFields.push('client_phone'); recordChange('Client Phone', current.rows[0].client_phone, client_phone); }
+    if (client_company !== undefined && client_company !== current.rows[0].client_company) { updates.push(`client_company = $${paramIdx++}`); params.push(client_company || null); changedFields.push('client_company'); recordChange('Client Company', current.rows[0].client_company, client_company); }
+    if (description !== undefined && description !== current.rows[0].description) { updates.push(`description = $${paramIdx++}`); params.push(description || null); changedFields.push('description'); recordChange('Description', current.rows[0].description, description); }
+    if (priority && priority !== current.rows[0].priority) { updates.push(`priority = $${paramIdx++}`); params.push(priority); changedFields.push('priority'); recordChange('Priority', current.rows[0].priority, priority); }
+    if (value !== undefined && value != current.rows[0].value) { updates.push(`value = $${paramIdx++}`); params.push(value || null); changedFields.push('value'); recordChange('Value', current.rows[0].value, value); }
+    if (finalAssignedTo !== undefined && finalAssignedTo !== current.rows[0].assigned_to) { updates.push(`assigned_to = $${paramIdx++}`); params.push(finalAssignedTo || null); changedFields.push('assigned_to'); recordChange('Assigned To', current.rows[0].assigned_to, finalAssignedTo); }
+    
     if (custom_data !== undefined) { 
-      // Compare custom_data JSON
-      if (JSON.stringify(custom_data) !== JSON.stringify(current.rows[0].custom_data)) {
+      // Compare custom_data JSON - detect individual field changes
+      const oldCustom = current.rows[0].custom_data || {};
+      const newCustom = custom_data || {};
+      let customChanged = false;
+      
+      // Get field labels from board settings
+      let fieldLabels = {};
+      let fieldTypes = {};
+      try {
+        const settingsRes = await client.query(
+          "SELECT value FROM settings WHERE board_id = $1 AND key = 'custom_fields'", 
+          [req.boardId]
+        );
+        if (settingsRes.rows[0]) {
+          const fields = Array.isArray(settingsRes.rows[0].value) ? settingsRes.rows[0].value : JSON.parse(settingsRes.rows[0].value);
+          fields.forEach(f => { fieldLabels[f.id] = f.label; fieldTypes[f.id] = f.type; });
+        }
+      } catch (e) { console.error('Failed to get field labels:', e); }
+
+      // Get user names for user_dropdown fields
+      let userNames = {};
+      const userDropdownFields = Object.keys(fieldTypes).filter(k => fieldTypes[k] === 'user_dropdown');
+      if (userDropdownFields.length > 0) {
+        const allUserIds = new Set();
+        userDropdownFields.forEach(fid => {
+          if (oldCustom[fid]) allUserIds.add(oldCustom[fid]);
+          if (newCustom[fid]) allUserIds.add(newCustom[fid]);
+        });
+        if (allUserIds.size > 0) {
+          try {
+            const userRes = await client.query('SELECT id, name FROM users WHERE id = ANY($1)', [Array.from(allUserIds)]);
+            userRes.rows.forEach(u => { userNames[u.id] = u.name; });
+          } catch (e) { console.error('Failed to get user names:', e); }
+        }
+      }
+
+      // Detect per-field changes in custom_data
+      const allKeys = new Set([...Object.keys(oldCustom), ...Object.keys(newCustom)]);
+      for (const key of allKeys) {
+        if (String(oldCustom[key] || '') !== String(newCustom[key] || '')) {
+          customChanged = true;
+          const label = fieldLabels[key] || key;
+          let oldDisplay = oldCustom[key] || '';
+          let newDisplay = newCustom[key] || '';
+          
+          // Resolve user names for user_dropdown
+          if (fieldTypes[key] === 'user_dropdown') {
+            oldDisplay = userNames[oldCustom[key]] || oldDisplay || 'Unassigned';
+            newDisplay = userNames[newCustom[key]] || newDisplay || 'Unassigned';
+          }
+          
+          recordChange(label, oldDisplay, newDisplay);
+        }
+      }
+
+      if (customChanged) {
         updates.push(`custom_data = $${paramIdx++}`); 
         params.push(custom_data); 
         changedFields.push('custom_data'); 
@@ -221,8 +286,8 @@ const updateLead = async (req, res, next) => {
       await client.query(`UPDATE leads SET ${updates.join(', ')} WHERE id = $${paramIdx}`, params);
       
       await client.query(
-        `INSERT INTO lead_history (lead_id, user_id, action, details) VALUES ($1, $2, 'updated', $3)`,
-        [id, req.user.id, JSON.stringify({ fields: changedFields })]
+        `INSERT INTO lead_history (lead_id, user_id, action, details) VALUES ($1, $2, 'field_updated', $3)`,
+        [id, req.user.id, JSON.stringify({ changes: changeDetails })]
       );
     }
 
@@ -231,7 +296,23 @@ const updateLead = async (req, res, next) => {
     // Notify if assignee changed
     if (finalAssignedTo && finalAssignedTo !== current.rows[0].assigned_to) {
       const { sendActionEmail } = require('../services/email');
-      sendActionEmail(finalAssignedTo, id, `Lead Re-assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you.`, `Client: ${current.rows[0].client_name}`);
+      sendActionEmail(finalAssignedTo, id, `Lead Assigned to You: ${current.rows[0].title}`, `A lead has been assigned to you. Please check it once.`, `<strong>Lead:</strong> ${current.rows[0].title}<br><strong>Client:</strong> ${current.rows[0].client_name}`);
+
+      // Also send push notification to the assignee
+      try {
+        const assigneeRes = await pool.query('SELECT fcm_token FROM users WHERE id = $1', [finalAssignedTo]);
+        if (assigneeRes.rows[0]?.fcm_token) {
+          const { sendPushNotification } = require('../services/fcm');
+          await sendPushNotification(
+            assigneeRes.rows[0].fcm_token,
+            `Lead Assigned to You`,
+            `${current.rows[0].title} - Client: ${current.rows[0].client_name}`,
+            { url: `/leads/${id}` }
+          );
+        }
+      } catch (pushErr) {
+        console.error('Push notification error on assignment:', pushErr);
+      }
     }
 
     const fullLead = await pool.query(
