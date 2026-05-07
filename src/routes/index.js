@@ -10,10 +10,15 @@ const statsCtrl = require('../controllers/statsController');
 const visitsCtrl = require('../controllers/visitsController');
 const settingsCtrl = require('../controllers/settingsController');
 const boardsCtrl = require('../controllers/boardsController');
+const formsCtrl = require('../controllers/formsController');
 const cronRoute = require('./cron');
 
 // Mount Cron route (cron-job.org invokes this)
 router.use('/trigger-reminders', cronRoute);
+
+// Public form routes (no authentication required)
+router.get('/public/form/:boardId', formsCtrl.getPublicForm);
+router.post('/public/form/:boardId/submit', formsCtrl.submitPublicForm);
 
 // Stats (require board access)
 router.get('/stats/today', authenticate, requireBoardAccess, requireManagerOrAdmin, statsCtrl.getTodayStats);
@@ -68,5 +73,9 @@ router.put('/visits/:id', authenticate, requireBoardAccess, visitsCtrl.updateVis
 // Settings
 router.get('/settings', authenticate, requireBoardAccess, settingsCtrl.getSettings);
 router.put('/settings', authenticate, requireBoardAccess, requireManagerOrAdmin, settingsCtrl.updateSettings);
+
+// Lead Form config (alias for settings, scoped to forms)
+router.get('/forms/config', authenticate, requireBoardAccess, requireManagerOrAdmin, settingsCtrl.getSettings);
+router.put('/forms/config', authenticate, requireBoardAccess, requireManagerOrAdmin, settingsCtrl.updateSettings);
 
 module.exports = router;
