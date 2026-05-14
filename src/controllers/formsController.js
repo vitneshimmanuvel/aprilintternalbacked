@@ -88,16 +88,24 @@ const submitPublicForm = async (req, res, next) => {
     };
     const customData = {};
 
+    console.log('=== FORM SUBMISSION DEBUG ===');
+    console.log('submittedData keys:', Object.keys(submittedData));
+    console.log('submittedData:', JSON.stringify(submittedData, null, 2));
+    console.log('configFields count:', configFields.length);
+
     for (const fieldDef of configFields) {
       const fieldKey = fieldDef.id;          // key used in the submitted form body
       const systemKey = fieldDef.systemKey;   // which lead field it maps to (if any)
       const rawValue = (submittedData[fieldKey] || '').toString().trim();
+
+      console.log(`Field "${fieldDef.label}" | formKey=${fieldKey} | systemKey=${systemKey} | rawValue="${rawValue}"`);
 
       if (!rawValue) continue; // skip empty answers
 
       if (systemKey && systemFieldAccumulator.hasOwnProperty(systemKey)) {
         // Map into a standard lead column — accumulate so we can join later
         systemFieldAccumulator[systemKey].push(rawValue);
+        console.log(`  -> Mapped to system field: ${systemKey}`);
       } else {
         // Store in custom_data using the explicit systemKey if provided (which maps to custom field id), 
         // otherwise fallback to a slugified label
@@ -108,6 +116,7 @@ const submitPublicForm = async (req, res, next) => {
         } else {
           customData[labelKey] = rawValue;
         }
+        console.log(`  -> Stored in customData["${labelKey}"] = "${customData[labelKey]}"`);
       }
     }
 
@@ -120,6 +129,9 @@ const submitPublicForm = async (req, res, next) => {
     const clientCompany = joinField(systemFieldAccumulator.client_company);
     const leadTitle     = joinField(systemFieldAccumulator.title)           || `Enquiry from ${clientName}`;
     const description   = joinField(systemFieldAccumulator.description);
+
+    console.log('Final system fields:', { clientName, clientEmail, clientPhone, clientCompany, leadTitle, description });
+    console.log('Final customData:', JSON.stringify(customData, null, 2));
 
     // ── Get first pipeline stage ──
     let firstStage = 'meeting';
@@ -168,6 +180,7 @@ const submitPublicForm = async (req, res, next) => {
       [leadTitle, clientName, clientEmail, clientPhone, clientCompany, description, createdBy, assignee, boardId, customData, firstStage]
     );
     const lead = leadResult.rows[0];
+    console.log('Inserted lead custom_data:', JSON.stringify(lead.custom_data, null, 2));
 
     // ── History + initial note ──
     await client.query(
