@@ -12,9 +12,19 @@ const getTodayStats = async (req, res, next) => {
     if (from_date && to_date) {
       dateFilterSql = `DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') BETWEEN $${paramIdx} AND $${paramIdx+1}`;
       params.push(from_date, to_date);
+      paramIdx += 2;
     } else if (from_date) {
       dateFilterSql = `DATE(created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') = $${paramIdx}`;
       params.push(from_date);
+      paramIdx++;
+    }
+
+    let titleFilterSql = '';
+    const { title } = req.query;
+    if (title) {
+      titleFilterSql = `AND l.title ILIKE $${paramIdx}`;
+      params.push(`%${title}%`);
+      paramIdx++;
     }
 
     // 1. Leads created in date range
@@ -22,7 +32,7 @@ const getTodayStats = async (req, res, next) => {
       SELECT l.id, l.title, l.client_name, l.created_at, u.name as creator_name, u.role as creator_role, l.stage
       FROM leads l
       JOIN users u ON l.created_by = u.id
-      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'l.created_at')}
+      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'l.created_at')} ${titleFilterSql}
       ORDER BY l.created_at DESC
     `, params);
 
@@ -33,7 +43,7 @@ const getTodayStats = async (req, res, next) => {
       FROM lead_history h
       JOIN users u ON h.user_id = u.id
       JOIN leads l ON h.lead_id = l.id
-      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'h.created_at')}
+      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'h.created_at')} ${titleFilterSql}
       ORDER BY h.created_at DESC
     `, params);
 
@@ -46,7 +56,7 @@ const getTodayStats = async (req, res, next) => {
       FROM users u
       JOIN board_users bu ON bu.user_id = u.id
       LEFT JOIN lead_history h ON u.id = h.user_id AND ${dateFilterSql.replace(/created_at/g, 'h.created_at')} 
-        AND EXISTS (SELECT 1 FROM leads l WHERE l.id = h.lead_id AND l.board_id = $1)
+        AND EXISTS (SELECT 1 FROM leads l WHERE l.id = h.lead_id AND l.board_id = $1 ${titleFilterSql})
       WHERE bu.board_id = $1
       GROUP BY u.id, u.name, u.role
       HAVING COUNT(h.id) > 0
@@ -60,7 +70,7 @@ const getTodayStats = async (req, res, next) => {
       FROM lead_visits v
       JOIN leads l ON v.lead_id = l.id
       JOIN users u ON v.created_by = u.id
-      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'v.created_at')}
+      WHERE l.board_id = $1 AND ${dateFilterSql.replace(/created_at/g, 'v.created_at')} ${titleFilterSql}
       ORDER BY v.created_at DESC
     `, params);
 
@@ -73,7 +83,7 @@ const getTodayStats = async (req, res, next) => {
       JOIN leads l ON ln.lead_id = l.id
       WHERE ln.money_collected = true 
         AND l.board_id = $1
-        AND ${dateFilterSql.replace(/created_at/g, 'ln.created_at')}
+        AND ${dateFilterSql.replace(/created_at/g, 'ln.created_at')} ${titleFilterSql}
       ORDER BY ln.created_at DESC
     `, params);
 

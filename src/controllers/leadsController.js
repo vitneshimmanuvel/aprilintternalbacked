@@ -22,6 +22,12 @@ const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) =
     paramIdx++;
   }
 
+  if (query.title) {
+    baseQuery += ` AND l.title ILIKE $${paramIdx}`;
+    params.push(`%${query.title}%`);
+    paramIdx++;
+  }
+
   if (query.search) {
     baseQuery += ` AND (l.title ILIKE $${paramIdx} OR l.client_name ILIKE $${paramIdx} OR l.client_email ILIKE $${paramIdx} OR l.client_company ILIKE $${paramIdx} OR l.client_phone ILIKE $${paramIdx} OR l.custom_data::text ILIKE $${paramIdx})`;
     params.push(`%${query.search}%`);
