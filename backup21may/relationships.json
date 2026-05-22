@@ -1,0 +1,1730 @@
+{
+  "generated_at": "2026-05-21T13:03:03.198Z",
+  "foreign_keys": [
+    {
+      "source_table": "board_users",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "board_users_user_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "board_users",
+      "source_column": "board_id",
+      "target_table": "boards",
+      "target_column": "id",
+      "constraint_name": "board_users_board_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "boards",
+      "source_column": "created_by",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "boards_created_by_fkey",
+      "delete_rule": "SET NULL",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_history",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "lead_history_user_id_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_history",
+      "source_column": "lead_id",
+      "target_table": "leads",
+      "target_column": "id",
+      "constraint_name": "lead_history_lead_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_notes",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "lead_notes_user_id_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_notes",
+      "source_column": "lead_id",
+      "target_table": "leads",
+      "target_column": "id",
+      "constraint_name": "lead_notes_lead_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_visits",
+      "source_column": "lead_id",
+      "target_table": "leads",
+      "target_column": "id",
+      "constraint_name": "lead_visits_lead_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "lead_visits",
+      "source_column": "created_by",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "lead_visits_created_by_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "leads",
+      "source_column": "assigned_to",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "leads_assigned_to_fkey",
+      "delete_rule": "SET NULL",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "leads",
+      "source_column": "board_id",
+      "target_table": "boards",
+      "target_column": "id",
+      "constraint_name": "leads_board_id_fkey",
+      "delete_rule": "SET NULL",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "leads",
+      "source_column": "created_by",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "leads_created_by_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "note_edits",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "note_edits_user_id_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "note_edits",
+      "source_column": "note_id",
+      "target_table": "lead_notes",
+      "target_column": "id",
+      "constraint_name": "note_edits_note_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "reminders",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "reminders_user_id_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "reminders",
+      "source_column": "lead_id",
+      "target_table": "leads",
+      "target_column": "id",
+      "constraint_name": "reminders_lead_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "settings",
+      "source_column": "board_id",
+      "target_table": "boards",
+      "target_column": "id",
+      "constraint_name": "settings_board_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "visit_participants",
+      "source_column": "user_id",
+      "target_table": "users",
+      "target_column": "id",
+      "constraint_name": "visit_participants_user_id_fkey",
+      "delete_rule": "RESTRICT",
+      "update_rule": "NO ACTION"
+    },
+    {
+      "source_table": "visit_participants",
+      "source_column": "visit_id",
+      "target_table": "lead_visits",
+      "target_column": "id",
+      "constraint_name": "visit_participants_visit_id_fkey",
+      "delete_rule": "CASCADE",
+      "update_rule": "NO ACTION"
+    }
+  ],
+  "all_constraints": [
+    {
+      "table_name": "board_users",
+      "constraint_name": "board_users_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "board_users",
+      "constraint_name": "board_users_board_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "board_users",
+      "constraint_name": "board_users_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "board_users",
+      "constraint_name": "board_users_board_id_user_id_key",
+      "constraint_type": "UNIQUE",
+      "definition": "UNIQUE (board_id, user_id)"
+    },
+    {
+      "table_name": "boards",
+      "constraint_name": "boards_created_by_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "boards",
+      "constraint_name": "boards_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "boards",
+      "constraint_name": "boards_slug_key",
+      "constraint_type": "UNIQUE",
+      "definition": "UNIQUE (slug)"
+    },
+    {
+      "table_name": "lead_history",
+      "constraint_name": "lead_history_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "lead_history",
+      "constraint_name": "lead_history_lead_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lead_history",
+      "constraint_name": "lead_history_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "lead_notes",
+      "constraint_name": "lead_notes_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "lead_notes",
+      "constraint_name": "lead_notes_lead_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lead_notes",
+      "constraint_name": "lead_notes_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "lead_visits",
+      "constraint_name": "lead_visits_outcome_check",
+      "constraint_type": "CHECK",
+      "definition": "CHECK (((outcome)::text = ANY ((ARRAY['positive'::character varying, 'neutral'::character varying, 'negative'::character varying, 'pending'::character varying])::text[])))"
+    },
+    {
+      "table_name": "lead_visits",
+      "constraint_name": "lead_visits_purpose_check",
+      "constraint_type": "CHECK",
+      "definition": "CHECK (((purpose)::text = ANY ((ARRAY['site_visit'::character varying, 'client_meeting'::character varying, 'follow_up_visit'::character varying, 'final_inspection'::character varying, 'other'::character varying])::text[])))"
+    },
+    {
+      "table_name": "lead_visits",
+      "constraint_name": "lead_visits_lead_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "lead_visits",
+      "constraint_name": "lead_visits_created_by_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "lead_visits",
+      "constraint_name": "lead_visits_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "leads",
+      "constraint_name": "leads_priority_check",
+      "constraint_type": "CHECK",
+      "definition": "CHECK (((priority)::text = ANY ((ARRAY['low'::character varying, 'medium'::character varying, 'high'::character varying])::text[])))"
+    },
+    {
+      "table_name": "leads",
+      "constraint_name": "leads_assigned_to_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (assigned_to) REFERENCES users(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "leads",
+      "constraint_name": "leads_created_by_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (created_by) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "leads",
+      "constraint_name": "leads_board_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE SET NULL"
+    },
+    {
+      "table_name": "leads",
+      "constraint_name": "leads_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "note_edits",
+      "constraint_name": "note_edits_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "note_edits",
+      "constraint_name": "note_edits_note_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (note_id) REFERENCES lead_notes(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "note_edits",
+      "constraint_name": "note_edits_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "reminders",
+      "constraint_name": "reminders_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "reminders",
+      "constraint_name": "reminders_lead_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (lead_id) REFERENCES leads(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "reminders",
+      "constraint_name": "reminders_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "settings",
+      "constraint_name": "settings_board_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (board_id) REFERENCES boards(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "settings",
+      "constraint_name": "settings_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (board_id, key)"
+    },
+    {
+      "table_name": "users",
+      "constraint_name": "users_role_check",
+      "constraint_type": "CHECK",
+      "definition": "CHECK (((role)::text = ANY ((ARRAY['admin'::character varying, 'manager'::character varying, 'visitor'::character varying])::text[])))"
+    },
+    {
+      "table_name": "users",
+      "constraint_name": "users_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "users",
+      "constraint_name": "users_email_key",
+      "constraint_type": "UNIQUE",
+      "definition": "UNIQUE (email)"
+    },
+    {
+      "table_name": "visit_participants",
+      "constraint_name": "visit_participants_travel_mode_check",
+      "constraint_type": "CHECK",
+      "definition": "CHECK (((travel_mode)::text = ANY ((ARRAY['car'::character varying, 'bike'::character varying, 'public_transport'::character varying, 'walk'::character varying, 'other'::character varying])::text[])))"
+    },
+    {
+      "table_name": "visit_participants",
+      "constraint_name": "visit_participants_visit_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (visit_id) REFERENCES lead_visits(id) ON DELETE CASCADE"
+    },
+    {
+      "table_name": "visit_participants",
+      "constraint_name": "visit_participants_user_id_fkey",
+      "constraint_type": "FOREIGN KEY",
+      "definition": "FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT"
+    },
+    {
+      "table_name": "visit_participants",
+      "constraint_name": "visit_participants_pkey",
+      "constraint_type": "PRIMARY KEY",
+      "definition": "PRIMARY KEY (id)"
+    },
+    {
+      "table_name": "visit_participants",
+      "constraint_name": "visit_participants_visit_id_user_id_key",
+      "constraint_type": "UNIQUE",
+      "definition": "UNIQUE (visit_id, user_id)"
+    }
+  ],
+  "indexes": [
+    {
+      "tablename": "board_users",
+      "indexname": "board_users_board_id_user_id_key",
+      "indexdef": "CREATE UNIQUE INDEX board_users_board_id_user_id_key ON public.board_users USING btree (board_id, user_id)"
+    },
+    {
+      "tablename": "board_users",
+      "indexname": "board_users_pkey",
+      "indexdef": "CREATE UNIQUE INDEX board_users_pkey ON public.board_users USING btree (id)"
+    },
+    {
+      "tablename": "board_users",
+      "indexname": "idx_board_users_board_id",
+      "indexdef": "CREATE INDEX idx_board_users_board_id ON public.board_users USING btree (board_id)"
+    },
+    {
+      "tablename": "board_users",
+      "indexname": "idx_board_users_user_id",
+      "indexdef": "CREATE INDEX idx_board_users_user_id ON public.board_users USING btree (user_id)"
+    },
+    {
+      "tablename": "boards",
+      "indexname": "boards_pkey",
+      "indexdef": "CREATE UNIQUE INDEX boards_pkey ON public.boards USING btree (id)"
+    },
+    {
+      "tablename": "boards",
+      "indexname": "boards_slug_key",
+      "indexdef": "CREATE UNIQUE INDEX boards_slug_key ON public.boards USING btree (slug)"
+    },
+    {
+      "tablename": "lead_history",
+      "indexname": "idx_lead_history_lead_id",
+      "indexdef": "CREATE INDEX idx_lead_history_lead_id ON public.lead_history USING btree (lead_id)"
+    },
+    {
+      "tablename": "lead_history",
+      "indexname": "lead_history_pkey",
+      "indexdef": "CREATE UNIQUE INDEX lead_history_pkey ON public.lead_history USING btree (id)"
+    },
+    {
+      "tablename": "lead_notes",
+      "indexname": "idx_lead_notes_lead_id",
+      "indexdef": "CREATE INDEX idx_lead_notes_lead_id ON public.lead_notes USING btree (lead_id)"
+    },
+    {
+      "tablename": "lead_notes",
+      "indexname": "lead_notes_pkey",
+      "indexdef": "CREATE UNIQUE INDEX lead_notes_pkey ON public.lead_notes USING btree (id)"
+    },
+    {
+      "tablename": "lead_visits",
+      "indexname": "idx_lead_visits_created_by",
+      "indexdef": "CREATE INDEX idx_lead_visits_created_by ON public.lead_visits USING btree (created_by)"
+    },
+    {
+      "tablename": "lead_visits",
+      "indexname": "idx_lead_visits_lead_id",
+      "indexdef": "CREATE INDEX idx_lead_visits_lead_id ON public.lead_visits USING btree (lead_id)"
+    },
+    {
+      "tablename": "lead_visits",
+      "indexname": "idx_lead_visits_visit_date",
+      "indexdef": "CREATE INDEX idx_lead_visits_visit_date ON public.lead_visits USING btree (visit_date)"
+    },
+    {
+      "tablename": "lead_visits",
+      "indexname": "lead_visits_pkey",
+      "indexdef": "CREATE UNIQUE INDEX lead_visits_pkey ON public.lead_visits USING btree (id)"
+    },
+    {
+      "tablename": "leads",
+      "indexname": "idx_leads_assigned_to",
+      "indexdef": "CREATE INDEX idx_leads_assigned_to ON public.leads USING btree (assigned_to)"
+    },
+    {
+      "tablename": "leads",
+      "indexname": "idx_leads_board_id",
+      "indexdef": "CREATE INDEX idx_leads_board_id ON public.leads USING btree (board_id)"
+    },
+    {
+      "tablename": "leads",
+      "indexname": "idx_leads_created_by",
+      "indexdef": "CREATE INDEX idx_leads_created_by ON public.leads USING btree (created_by)"
+    },
+    {
+      "tablename": "leads",
+      "indexname": "idx_leads_stage",
+      "indexdef": "CREATE INDEX idx_leads_stage ON public.leads USING btree (stage)"
+    },
+    {
+      "tablename": "leads",
+      "indexname": "leads_pkey",
+      "indexdef": "CREATE UNIQUE INDEX leads_pkey ON public.leads USING btree (id)"
+    },
+    {
+      "tablename": "note_edits",
+      "indexname": "note_edits_pkey",
+      "indexdef": "CREATE UNIQUE INDEX note_edits_pkey ON public.note_edits USING btree (id)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "idx_reminders_cron",
+      "indexdef": "CREATE INDEX idx_reminders_cron ON public.reminders USING btree (is_completed, remind_at) WHERE (is_completed = false)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "idx_reminders_lead_id",
+      "indexdef": "CREATE INDEX idx_reminders_lead_id ON public.reminders USING btree (lead_id)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "idx_reminders_remind_at",
+      "indexdef": "CREATE INDEX idx_reminders_remind_at ON public.reminders USING btree (remind_at)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "idx_reminders_user_completed",
+      "indexdef": "CREATE INDEX idx_reminders_user_completed ON public.reminders USING btree (user_id, is_completed)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "idx_reminders_user_id",
+      "indexdef": "CREATE INDEX idx_reminders_user_id ON public.reminders USING btree (user_id)"
+    },
+    {
+      "tablename": "reminders",
+      "indexname": "reminders_pkey",
+      "indexdef": "CREATE UNIQUE INDEX reminders_pkey ON public.reminders USING btree (id)"
+    },
+    {
+      "tablename": "settings",
+      "indexname": "idx_settings_board_id",
+      "indexdef": "CREATE INDEX idx_settings_board_id ON public.settings USING btree (board_id)"
+    },
+    {
+      "tablename": "settings",
+      "indexname": "settings_pkey",
+      "indexdef": "CREATE UNIQUE INDEX settings_pkey ON public.settings USING btree (board_id, key)"
+    },
+    {
+      "tablename": "users",
+      "indexname": "users_email_key",
+      "indexdef": "CREATE UNIQUE INDEX users_email_key ON public.users USING btree (email)"
+    },
+    {
+      "tablename": "users",
+      "indexname": "users_pkey",
+      "indexdef": "CREATE UNIQUE INDEX users_pkey ON public.users USING btree (id)"
+    },
+    {
+      "tablename": "visit_participants",
+      "indexname": "idx_visit_participants_user_id",
+      "indexdef": "CREATE INDEX idx_visit_participants_user_id ON public.visit_participants USING btree (user_id)"
+    },
+    {
+      "tablename": "visit_participants",
+      "indexname": "idx_visit_participants_visit_id",
+      "indexdef": "CREATE INDEX idx_visit_participants_visit_id ON public.visit_participants USING btree (visit_id)"
+    },
+    {
+      "tablename": "visit_participants",
+      "indexname": "visit_participants_pkey",
+      "indexdef": "CREATE UNIQUE INDEX visit_participants_pkey ON public.visit_participants USING btree (id)"
+    },
+    {
+      "tablename": "visit_participants",
+      "indexname": "visit_participants_visit_id_user_id_key",
+      "indexdef": "CREATE UNIQUE INDEX visit_participants_visit_id_user_id_key ON public.visit_participants USING btree (visit_id, user_id)"
+    }
+  ],
+  "column_details": {
+    "users": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "name",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "email",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "password_hash",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "role",
+        "data_type": "character varying",
+        "character_maximum_length": 20,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "true",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "fcm_token",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      }
+    ],
+    "leads": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "title",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "client_name",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "client_email",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "client_phone",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "client_company",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "description",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "stage",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": "'meeting'::character varying",
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "priority",
+        "data_type": "character varying",
+        "character_maximum_length": 20,
+        "column_default": "'medium'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "value",
+        "data_type": "numeric",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "numeric",
+        "numeric_precision": 15,
+        "numeric_scale": 2,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "assigned_to",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14
+      },
+      {
+        "column_name": "board_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15
+      },
+      {
+        "column_name": "custom_data",
+        "data_type": "jsonb",
+        "character_maximum_length": null,
+        "column_default": "'{}'::jsonb",
+        "is_nullable": "YES",
+        "udt_name": "jsonb",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16
+      }
+    ],
+    "lead_history": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "lead_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "action",
+        "data_type": "character varying",
+        "character_maximum_length": 100,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "field_changed",
+        "data_type": "character varying",
+        "character_maximum_length": 100,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "old_value",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "new_value",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "details",
+        "data_type": "jsonb",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "jsonb",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      }
+    ],
+    "lead_notes": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "lead_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "stage",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "content",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "is_edited",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "false",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "original_content",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "money_collected",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "false",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10
+      }
+    ],
+    "note_edits": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "note_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "previous_content",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "new_content",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "edited_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      }
+    ],
+    "reminders": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "lead_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "stage",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "title",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "description",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "remind_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "is_completed",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "false",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "completed_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "type",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": "'general'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11
+      },
+      {
+        "column_name": "recurrence",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": "'none'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 12
+      },
+      {
+        "column_name": "is_notified",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "false",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 13
+      },
+      {
+        "column_name": "completion_status",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": "'completed'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 14
+      },
+      {
+        "column_name": "completion_note",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 15
+      },
+      {
+        "column_name": "last_notified_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 16
+      }
+    ],
+    "board_users": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "board_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "role",
+        "data_type": "character varying",
+        "character_maximum_length": 20,
+        "column_default": "'member'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "added_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      }
+    ],
+    "boards": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "name",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "slug",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "description",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "color",
+        "data_type": "character varying",
+        "character_maximum_length": 20,
+        "column_default": "'#4f7cff'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "icon",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": "'briefcase'::character varying",
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "is_active",
+        "data_type": "boolean",
+        "character_maximum_length": null,
+        "column_default": "true",
+        "is_nullable": "YES",
+        "udt_name": "bool",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10
+      }
+    ],
+    "lead_visits": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "lead_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "created_by",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "location",
+        "data_type": "character varying",
+        "character_maximum_length": 500,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "distance_km",
+        "data_type": "numeric",
+        "character_maximum_length": null,
+        "column_default": "0",
+        "is_nullable": "YES",
+        "udt_name": "numeric",
+        "numeric_precision": 10,
+        "numeric_scale": 2,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "visit_date",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "purpose",
+        "data_type": "character varying",
+        "character_maximum_length": 100,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      },
+      {
+        "column_name": "notes",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 8
+      },
+      {
+        "column_name": "outcome",
+        "data_type": "character varying",
+        "character_maximum_length": 100,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 9
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 10
+      },
+      {
+        "column_name": "updated_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 11
+      }
+    ],
+    "settings": [
+      {
+        "column_name": "key",
+        "data_type": "character varying",
+        "character_maximum_length": 255,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "value",
+        "data_type": "jsonb",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "jsonb",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "board_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      }
+    ],
+    "visit_participants": [
+      {
+        "column_name": "id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": "uuid_generate_v4()",
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 1
+      },
+      {
+        "column_name": "visit_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 2
+      },
+      {
+        "column_name": "user_id",
+        "data_type": "uuid",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "NO",
+        "udt_name": "uuid",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 3
+      },
+      {
+        "column_name": "distance_km",
+        "data_type": "numeric",
+        "character_maximum_length": null,
+        "column_default": "0",
+        "is_nullable": "YES",
+        "udt_name": "numeric",
+        "numeric_precision": 10,
+        "numeric_scale": 2,
+        "ordinal_position": 4
+      },
+      {
+        "column_name": "travel_mode",
+        "data_type": "character varying",
+        "character_maximum_length": 50,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "varchar",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 5
+      },
+      {
+        "column_name": "travel_notes",
+        "data_type": "text",
+        "character_maximum_length": null,
+        "column_default": null,
+        "is_nullable": "YES",
+        "udt_name": "text",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 6
+      },
+      {
+        "column_name": "created_at",
+        "data_type": "timestamp with time zone",
+        "character_maximum_length": null,
+        "column_default": "now()",
+        "is_nullable": "YES",
+        "udt_name": "timestamptz",
+        "numeric_precision": null,
+        "numeric_scale": null,
+        "ordinal_position": 7
+      }
+    ]
+  }
+}

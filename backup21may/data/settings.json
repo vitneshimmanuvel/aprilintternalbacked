@@ -1,0 +1,187 @@
+[
+  {
+    "key": "stages",
+    "value": [
+      {
+        "id": "enquire",
+        "color": "var(--accent)",
+        "label": "Enquire"
+      },
+      {
+        "id": "connected",
+        "info": "",
+        "color": "#6366f1",
+        "label": "connected"
+      },
+      {
+        "id": "followup",
+        "info": "",
+        "color": "#6366f1",
+        "label": "followup"
+      },
+      {
+        "id": "converted",
+        "color": "var(--green)",
+        "label": "converted"
+      },
+      {
+        "id": "droped",
+        "color": "var(--red)",
+        "label": "droped"
+      }
+    ],
+    "board_id": "35c9b269-5570-4c85-aefb-294ea07d1f17"
+  },
+  {
+    "key": "stages",
+    "value": [
+      {
+        "id": "initial_pitch",
+        "info": "",
+        "color": "#6366f1",
+        "label": "initial pitch"
+      },
+      {
+        "id": "meeting",
+        "color": "var(--cyan)",
+        "label": "Meeting"
+      },
+      {
+        "id": "followup",
+        "color": "var(--accent)",
+        "label": "Follow-up"
+      },
+      {
+        "id": "negotiation",
+        "color": "var(--yellow)",
+        "label": "Negotiation"
+      },
+      {
+        "id": "estimation_review",
+        "color": "var(--orange)",
+        "label": "Est. Review"
+      },
+      {
+        "id": "finalization",
+        "color": "var(--green)",
+        "label": "Finalization"
+      },
+      {
+        "id": "cancelled",
+        "color": "var(--red)",
+        "label": "Cancelled"
+      }
+    ],
+    "board_id": "2dd7c80d-e352-47c5-8208-15e27a9f3283"
+  },
+  {
+    "key": "custom_fields",
+    "value": [
+      {
+        "id": "client_name",
+        "type": "name",
+        "label": "Client Name",
+        "isSystem": true,
+        "required": true,
+        "cardOrder": 1,
+        "showOnCard": true
+      },
+      {
+        "id": "title",
+        "type": "text",
+        "label": "Service needed",
+        "isSystem": true,
+        "required": true,
+        "showOnCard": true
+      },
+      {
+        "id": "field_1777876515611",
+        "type": "phone",
+        "label": "Mobile Number ",
+        "options": "",
+        "required": true,
+        "cardOrder": 99,
+        "showOnCard": false
+      },
+      {
+        "id": "field_1777876549153",
+        "type": "dropdown",
+        "label": "Source of Lead",
+        "options": "Digital,Walkin,Telemarketing,Referal,College session,Expo,Others",
+        "required": true,
+        "cardOrder": 99,
+        "showOnCard": false
+      },
+      {
+        "id": "field_1777876616424",
+        "type": "textarea",
+        "label": "Discription",
+        "options": "",
+        "required": false,
+        "cardOrder": 99,
+        "showOnCard": false
+      },
+      {
+        "id": "field_1777879162791",
+        "type": "user_dropdown",
+        "label": "Assigne",
+        "options": "",
+        "required": false,
+        "cardOrder": 99,
+        "showOnCard": false
+      }
+    ],
+    "board_id": "35c9b269-5570-4c85-aefb-294ea07d1f17"
+  },
+  {
+    "key": "lead_form_config",
+    "value": {
+      "title": "Payanaoveseas",
+      "fields": [
+        {
+          "id": "field_1778136161679",
+          "type": "name",
+          "label": " Name",
+          "options": "",
+          "required": true,
+          "systemKey": "client_name",
+          "placeholder": "enter your name here"
+        },
+        {
+          "id": "field_1778136208708",
+          "type": "phone",
+          "label": "Mobile Number",
+          "options": "",
+          "required": true,
+          "systemKey": "field_1777876515611",
+          "placeholder": "enter your mobile number"
+        },
+        {
+          "id": "field_1778145223333",
+          "type": "datetime",
+          "label": "your prefered Date and Time",
+          "options": "",
+          "required": false,
+          "systemKey": "field_1777876616424",
+          "placeholder": ""
+        },
+        {
+          "id": "field_1778145292579",
+          "type": "dropdown",
+          "label": "offers provided",
+          "options": "Free Profile Evaluvation,Spot Admission Guidance,Scholarship Awareness,Visa & loan Counselling",
+          "required": false,
+          "systemKey": "field_1777876616424",
+          "placeholder": ""
+        }
+      ],
+      "enabled": true,
+      "description": "Fell Free  to Enter",
+      "successMessage": "",
+      "defaultAssignee": "4fc8ef1a-f1a9-4cd0-93a2-5227089c5043",
+      "notificationEmails": "settloshafiqmohamed@gmail.com",
+      "sendConfirmationEmail": false
+    },
+    "board_id": "35c9b269-5570-4c85-aefb-294ea07d1f17"
+  }
+]

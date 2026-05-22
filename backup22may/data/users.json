@@ -1,0 +1,79 @@
+[
+  {
+    "id": "0b57ac9a-bd54-4742-96c8-fac5b254da2f",
+    "name": "System Admin",
+    "email": "admin@leadflow.com",
+    "password_hash": "$2a$10$qMLSFdilph2mFTaO5z9Bbuyn1SIMSPPOsw/MfEwbzmUabSgTchmcS",
+    "role": "admin",
+    "is_active": true,
+    "created_at": "2026-03-28T07:02:09.375Z",
+    "updated_at": "2026-03-28T07:02:09.375Z",
+    "fcm_token": null
+  },
+  {
+    "id": "4893e83c-7fa3-49e6-86cb-c16a2d64ba64",
+    "name": "bala",
+    "email": "settlobala@gmail.com",
+    "password_hash": "$2a$10$TqZGkJlm7CT5TXEFLSPhceErtOMfL4mF6GT7fzRnAVCaXkFlH2vy6",
+    "role": "visitor",
+    "is_active": true,
+    "created_at": "2026-04-03T05:09:09.313Z",
+    "updated_at": "2026-04-03T11:10:14.738Z",
+    "fcm_token": "e1_rfBpt5WjntO-DGMzml9:APA91bFLZ1illwYQC6yZ1dpNvIq5moPc-Eexoo0il5procS-DhmkKq7Lco9kaGmDCWWh77V6gy287MQO-TCtNDZayHJ864iE1Be4TU1jWD0YumzAOMmIB54"
+  },
+  {
+    "id": "8630c263-ed53-4f53-89ab-2adfc6ee46c4",
+    "name": "shafiq",
+    "email": "settloshafiqmohamed@gmail.com",
+    "password_hash": "$2a$10$cCftFcksjLM97x99wfN.CeBwHwUovA0q2hLQHqEsQ8lqnxkwGess6",
+    "role": "visitor",
+    "is_active": true,
+    "created_at": "2026-04-03T05:09:55.399Z",
+    "updated_at": "2026-05-21T08:43:29.523Z",
+    "fcm_token": "c70gq1s5OrTKCpiGwyDKpu:APA91bH3XJsSWME7q8FAWDbQB1LL4MeHN5Rec73sPUqxis-7Syc7LTynUogF_ct0PQ_W8XvkmpLJNFH51D9SFQajjT_xSySvbp3utXdKKA6Kljg00q2p0Io"
+  },
+  {
+    "id": "ff6be446-a029-4134-9d14-23b80d4ae1d7",
+    "name": "jawahar",
+    "email": "settlojawaharkumar@gmail.com",
+    "password_hash": "$2a$10$H3fDM/7NsbkIgMnq6nM3G.cKWFqw7gQzzfDYgHEed25zjhwUR4Maa",
+    "role": "manager",
+    "is_active": true,
+    "created_at": "2026-04-03T05:36:33.507Z",
+    "updated_at": "2026-04-07T12:30:25.141Z",
+    "fcm_token": "dIv2KUgJNK-jRq0hS5DgWj:APA91bFDJETLVqFOI31fxUyUJ3eQIiWIdB-mo8DOQ-UYO0WGNoG49ucgVeianysiako5A6-x6v1hYETn2LBa-SDr78U947gMMZGTD42ZY5X-FZsCCUK6JxU"
+  },
+  {
+    "id": "baf4fe32-0608-47da-9930-86e346e62d04",
+    "name": "kowsalya",
+    "email": "counsellorpayana@gmail.com",
+    "password_hash": "$2a$10$ndtwFH7PmgYud2ZJ47mU2O7sNHsZZbPZLII595VIkSop16L7zUmGO",
+    "role": "visitor",
+    "is_active": true,
+    "created_at": "2026-05-04T06:44:56.811Z",
+    "updated_at": "2026-05-22T05:26:09.737Z",
+    "fcm_token": "c70gq1s5OrTKCpiGwyDKpu:APA91bH3XJsSWME7q8FAWDbQB1LL4MeHN5Rec73sPUqxis-7Syc7LTynUogF_ct0PQ_W8XvkmpLJNFH51D9SFQajjT_xSySvbp3utXdKKA6Kljg00q2p0Io"
+  },
+  {
+    "id": "4fc8ef1a-f1a9-4cd0-93a2-5227089c5043",
+    "name": "Divya",
+    "email": "work@payanaoverseas.com",
+    "password_hash": "$2a$10$/iNxshYn/ssgRKAzCgVsAeRFHFgJqhFw0FM3zMM/h99XaxeTk7yhe",
+    "role": "manager",
+    "is_active": true,
+    "created_at": "2026-05-04T06:45:42.175Z",
+    "updated_at": "2026-05-22T07:41:39.044Z",
+    "fcm_token": "f4O11gd56RDCrXRNiJ5J65:APA91bENdXpGjrq5MbK2Fyh_fzGJ-DNKZRGZWtXfbd-ioQVJFhRULDlTL5Mp8JdT-TOLIJEb7PDj5NZuhb-Hiq4PhE0xbLMnYxXwAngHPRs6rA5MPlT39-g"
+  },
+  {
+    "id": "142e3505-c8e9-4a71-a9e0-e30ddb46c8b0",
+    "name": "Hariprasath",
+    "email": "study@payanaoverseas.com",
+    "password_hash": "$2a$10$BxrGahsnhfVDEA/D0pY20.WWnQDtxWOaaR4vKcejXeSifoHfa2ue2",
+    "role": "visitor",
+    "is_active": true,
+    "created_at": "2026-05-05T05:55:08.165Z",
+    "updated_at": "2026-05-22T05:40:32.216Z",
+    "fcm_token": "eQX0Rk7TQqnRXbp2uor5aW:APA91bE8fqaUvYVtta96ttHVlX61Nrh8QRteDT2I98GjaI7JAeihp7WUnBxpcltjILi_uhh5_FAen2ChzRorpMjKECb_U37158QOPjpFGc0LyonilPQhUEE"
+  }
+]
