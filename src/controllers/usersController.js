@@ -5,7 +5,11 @@ const pool = require('../config/db');
 const getUsers = async (req, res, next) => {
   try {
     const result = await pool.query(`
-      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at
+      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at,
+        COALESCE(
+          (SELECT json_agg(bu.board_id) FROM board_users bu WHERE bu.user_id = u.id),
+          '[]'::json
+        ) as board_ids
       FROM users u
       JOIN board_users bu ON bu.user_id = u.id
       WHERE bu.board_id = $1
@@ -20,9 +24,15 @@ const getUsers = async (req, res, next) => {
 // GET /api/users/all - Admin: list ALL users globally (for board assignment)
 const getAllUsers = async (req, res, next) => {
   try {
-    const result = await pool.query(
-      'SELECT id, name, email, role, is_active, created_at FROM users ORDER BY created_at DESC'
-    );
+    const result = await pool.query(`
+      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at,
+        COALESCE(
+          (SELECT json_agg(bu.board_id) FROM board_users bu WHERE bu.user_id = u.id),
+          '[]'::json
+        ) as board_ids
+      FROM users u
+      ORDER BY u.created_at DESC
+    `);
     res.json({ users: result.rows });
   } catch (err) {
     next(err);
@@ -47,20 +57,29 @@ const getActiveUsers = async (req, res, next) => {
 
 // POST /api/users - Admin: create user and add to current board
 const createUser = async (req, res, next) => {
+  const { name, email, password, role, boardIds } = req.body;
+  if (!name || !email || !password || !role)
+    return res.status(400).json({ message: 'All fields are required' });
+  if (!['manager', 'visitor'].includes(role))
+    return res.status(400).json({ message: 'Role must be manager or visitor' });
+  if (password.length < 6)
+    return res.status(400).json({ message: 'Password must be at least 6 characters' });
+
+  // Validation: Non-admin users must belong to at least one workspace
+  if (role !== 'admin' && boardIds !== undefined && (!Array.isArray(boardIds) || boardIds.length === 0)) {
+    return res.status(400).json({ message: 'At least one workspace must be selected' });
+  }
+
   const client = await pool.connect();
   try {
     await client.query('BEGIN');
-    const { name, email, password, role } = req.body;
-    if (!name || !email || !password || !role)
-      return res.status(400).json({ message: 'All fields are required' });
-    if (!['manager', 'visitor'].includes(role))
-      return res.status(400).json({ message: 'Role must be manager or visitor' });
-    if (password.length < 6)
-      return res.status(400).json({ message: 'Password must be at least 6 characters' });
 
     const existing = await client.query('SELECT id FROM users WHERE email = $1', [email.toLowerCase()]);
-    if (existing.rows[0])
+    if (existing.rows[0]) {
+      await client.query('ROLLBACK');
+      client.release();
       return res.status(409).json({ message: 'Email already in use' });
+    }
 
     const hash = await bcrypt.hash(password, 10);
     const result = await client.query(
@@ -68,14 +87,28 @@ const createUser = async (req, res, next) => {
       [name.trim(), email.toLowerCase().trim(), hash, role]
     );
 
-    // Auto-add to the current board
-    await client.query(
-      'INSERT INTO board_users (board_id, user_id, role) VALUES ($1, $2, $3)',
-      [req.boardId, result.rows[0].id, 'member']
-    );
+    // Add to selected boards or fallback to the current board
+    const targetBoards = (boardIds && Array.isArray(boardIds) && boardIds.length > 0) ? boardIds : [req.boardId];
+    for (const bId of targetBoards) {
+      await client.query(
+        'INSERT INTO board_users (board_id, user_id, role) VALUES ($1, $2, $3)',
+        [bId, result.rows[0].id, 'member']
+      );
+    }
 
     await client.query('COMMIT');
-    res.status(201).json({ user: result.rows[0] });
+
+    // Fetch newly created user with board_ids to return
+    const userRes = await pool.query(`
+      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at,
+        COALESCE(
+          (SELECT json_agg(bu.board_id) FROM board_users bu WHERE bu.user_id = u.id),
+          '[]'::json
+        ) as board_ids
+      FROM users u WHERE u.id = $1
+    `, [result.rows[0].id]);
+
+    res.status(201).json({ user: userRes.rows[0] });
   } catch (err) {
     await client.query('ROLLBACK');
     next(err);
@@ -86,20 +119,40 @@ const createUser = async (req, res, next) => {
 
 // PUT /api/users/:id - Admin: update user
 const updateUser = async (req, res, next) => {
+  const client = await pool.connect();
   try {
+    await client.query('BEGIN');
     const { id } = req.params;
-    const { name, email, role, is_active, password } = req.body;
+    const { name, email, role, is_active, password, boardIds } = req.body;
 
     // Prevent admin from deactivating themselves
-    if (req.user.id === id && is_active === false)
+    if (req.user.id === id && is_active === false) {
+      await client.query('ROLLBACK');
+      client.release();
       return res.status(400).json({ message: 'Cannot deactivate your own account' });
+    }
 
-    const current = await pool.query('SELECT * FROM users WHERE id = $1', [id]);
-    if (!current.rows[0]) return res.status(404).json({ message: 'User not found' });
+    const current = await client.query('SELECT * FROM users WHERE id = $1', [id]);
+    if (!current.rows[0]) {
+      await client.query('ROLLBACK');
+      client.release();
+      return res.status(404).json({ message: 'User not found' });
+    }
 
     // Prevent changing admin role
-    if (current.rows[0].role === 'admin' && role && role !== 'admin')
+    if (current.rows[0].role === 'admin' && role && role !== 'admin') {
+      await client.query('ROLLBACK');
+      client.release();
       return res.status(400).json({ message: 'Cannot change admin role' });
+    }
+
+    // Validation: Non-admin users must belong to at least one workspace
+    const targetRole = role || current.rows[0].role;
+    if (targetRole !== 'admin' && boardIds !== undefined && (!Array.isArray(boardIds) || boardIds.length === 0)) {
+      await client.query('ROLLBACK');
+      client.release();
+      return res.status(400).json({ message: 'At least one workspace must be selected' });
+    }
 
     let updateQuery = `UPDATE users SET
       name = COALESCE($1, name),
@@ -115,7 +168,11 @@ const updateUser = async (req, res, next) => {
     ];
 
     if (password) {
-      if (password.length < 6) return res.status(400).json({ message: 'Password too short' });
+      if (password.length < 6) {
+        await client.query('ROLLBACK');
+        client.release();
+        return res.status(400).json({ message: 'Password too short' });
+      }
       const hash = await bcrypt.hash(password, 10);
       updateQuery += `, password_hash = $6`;
       params = [name?.trim() || null, email?.toLowerCase().trim() || null, role || null, is_active !== undefined ? is_active : null, id, hash];
@@ -124,10 +181,37 @@ const updateUser = async (req, res, next) => {
       updateQuery += ` WHERE id = $5 RETURNING id, name, email, role, is_active, created_at`;
     }
 
-    const result = await pool.query(updateQuery, params);
-    res.json({ user: result.rows[0] });
+    const result = await client.query(updateQuery, params);
+
+    // Update board assignments
+    if (boardIds && Array.isArray(boardIds)) {
+      await client.query('DELETE FROM board_users WHERE user_id = $1', [id]);
+      for (const bId of boardIds) {
+        await client.query(
+          'INSERT INTO board_users (board_id, user_id, role) VALUES ($1, $2, $3)',
+          [bId, id, 'member']
+        );
+      }
+    }
+
+    await client.query('COMMIT');
+
+    // Fetch newly updated user with board_ids to return
+    const userRes = await pool.query(`
+      SELECT u.id, u.name, u.email, u.role, u.is_active, u.created_at,
+        COALESCE(
+          (SELECT json_agg(bu.board_id) FROM board_users bu WHERE bu.user_id = u.id),
+          '[]'::json
+        ) as board_ids
+      FROM users u WHERE u.id = $1
+    `, [id]);
+
+    res.json({ user: userRes.rows[0] });
   } catch (err) {
+    await client.query('ROLLBACK');
     next(err);
+  } finally {
+    client.release();
   }
 };
 
