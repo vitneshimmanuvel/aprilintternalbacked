@@ -20,6 +20,12 @@ router.use('/trigger-reminders', cronRoute);
 router.get('/public/form/:boardId', formsCtrl.getPublicForm);
 router.post('/public/form/:boardId/submit', formsCtrl.submitPublicForm);
 
+// Secure File Uploads (uses multer in-memory storage)
+const multer = require('multer');
+const upload = multer({ limits: { fileSize: 15 * 1024 * 1024 } }); // 15MB limit
+const uploadCtrl = require('../controllers/uploadController');
+router.post('/upload', authenticate, upload.array('files', 5), uploadCtrl.uploadFiles);
+
 // Stats (require board access)
 router.get('/stats/today', authenticate, requireBoardAccess, requireManagerOrAdmin, statsCtrl.getTodayStats);
 
