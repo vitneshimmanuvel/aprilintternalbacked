@@ -1,4 +1,5 @@
 const pool = require('../config/db');
+const { checkPhoneDuplicateHelper } = require('../services/validation');
 
 // Helper to build filtering queries
 const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) => {
@@ -71,6 +72,14 @@ const createLead = async (req, res, next) => {
   try {
     await client.query('BEGIN');
     const { title, client_name, client_email, client_phone, client_company, description, priority, value, assigned_to, custom_data } = req.body;
+
+    const duplicate = await checkPhoneDuplicateHelper(client, req.boardId, client_phone, custom_data);
+    if (duplicate) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        message: `Mobile number ${duplicate.phone} is already registered under lead "${duplicate.lead.client_name}" in board "${duplicate.lead.board_name}" (Created by ${duplicate.lead.creator_name || 'System'}).`
+      });
+    }
 
     let finalTitle = title ? title.trim() : 'Unnamed Lead';
     let finalClientName = client_name ? client_name.trim() : 'Unknown Client';
@@ -198,6 +207,17 @@ const updateLead = async (req, res, next) => {
 
     const current = await client.query('SELECT * FROM leads WHERE id = $1 AND board_id = $2', [id, req.boardId]);
     if (!current.rows[0]) return res.status(404).json({ message: 'Lead not found or access denied' });
+
+    const checkPhone = client_phone !== undefined ? client_phone : current.rows[0].client_phone;
+    const checkCustomData = custom_data !== undefined ? custom_data : current.rows[0].custom_data;
+
+    const duplicate = await checkPhoneDuplicateHelper(client, req.boardId, checkPhone, checkCustomData, id);
+    if (duplicate) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        message: `Mobile number ${duplicate.phone} is already registered under lead "${duplicate.lead.client_name}" in board "${duplicate.lead.board_name}" (Created by ${duplicate.lead.creator_name || 'System'}).`
+      });
+    }
 
     // Removed visitor update restriction so they can edit leads and re-assign
     let finalAssignedTo = assigned_to;
@@ -447,4 +467,74 @@ const moveStage = async (req, res, next) => {
   }
 };
 
-module.exports = { getLeads, createLead, getLead, updateLead, moveStage };
+// GET /api/leads/check-phone
+const checkPhoneDuplicate = async (req, res, next) => {
+  try {
+    const { phone, excludeLeadId } = req.query;
+    if (!phone) {
+      return res.json({ isDuplicate: false });
+    }
+
+    const digits = String(phone).replace(/\D/g, '');
+    if (digits.length < 10) {
+      return res.json({ isDuplicate: false });
+    }
+    const last10 = digits.slice(-10);
+
+    // Get all custom field keys of type phone across the entire system
+    const settingsRes = await pool.query("SELECT value FROM settings WHERE key = 'custom_fields'");
+    const phoneKeys = new Set();
+    for (const row of settingsRes.rows) {
+      try {
+        const fields = typeof row.value === 'string' ? JSON.parse(row.value) : row.value;
+        if (Array.isArray(fields)) {
+          fields.filter(f => f.type === 'phone').forEach(f => phoneKeys.add(f.id));
+        }
+      } catch (e) {}
+    }
+    const keysArray = Array.from(phoneKeys);
+
+    let query = `
+      SELECT l.id, l.client_name, l.title, b.name as board_name, u.name as creator_name
+      FROM leads l
+      LEFT JOIN boards b ON l.board_id = b.id
+      LEFT JOIN users u ON l.created_by = u.id
+      WHERE (
+        (l.client_phone IS NOT NULL AND REGEXP_REPLACE(l.client_phone, '\\D', '', 'g') LIKE $1)
+        OR
+        EXISTS (
+          SELECT 1 
+          FROM jsonb_each_text(l.custom_data) 
+          WHERE key = ANY($2) AND REGEXP_REPLACE(value, '\\D', '', 'g') LIKE $1
+        )
+      )
+    `;
+    const params = [`%${last10}`, keysArray];
+
+    if (excludeLeadId) {
+      query += ` AND l.id != $3`;
+      params.push(excludeLeadId);
+    }
+
+    const result = await pool.query(query, params);
+    if (result.rows.length > 0) {
+      const match = result.rows[0];
+      return res.json({
+        isDuplicate: true,
+        lead: {
+          id: match.id,
+          client_name: match.client_name,
+          title: match.title,
+          board_name: match.board_name,
+          creator_name: match.creator_name
+        }
+      });
+    }
+
+    return res.json({ isDuplicate: false });
+  } catch (err) {
+    next(err);
+  }
+};
+
+module.exports = { getLeads, createLead, getLead, updateLead, moveStage, checkPhoneDuplicate };

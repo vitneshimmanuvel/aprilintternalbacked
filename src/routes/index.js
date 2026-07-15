@@ -53,6 +53,7 @@ router.delete('/users/:id', authenticate, requireAdmin, usersCtrl.deleteUser);
 
 // Leads (all authenticated, but require board access)
 router.get('/leads', authenticate, requireBoardAccess, leadsCtrl.getLeads);
+router.get('/leads/check-phone', authenticate, requireBoardAccess, leadsCtrl.checkPhoneDuplicate);
 router.post('/leads', authenticate, requireBoardAccess, leadsCtrl.createLead);
 router.get('/leads/:id', authenticate, requireBoardAccess, leadsCtrl.getLead);
 router.put('/leads/:id', authenticate, requireBoardAccess, leadsCtrl.updateLead);

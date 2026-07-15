@@ -171,6 +171,16 @@ const submitPublicForm = async (req, res, next) => {
       return res.status(500).json({ message: 'Board has no members. Cannot create lead.' });
     }
 
+    // ── Check duplicate phone ──
+    const { checkPhoneDuplicateHelper } = require('../services/validation');
+    const duplicate = await checkPhoneDuplicateHelper(client, boardId, clientPhone, customData);
+    if (duplicate) {
+      await client.query('ROLLBACK');
+      return res.status(400).json({
+        message: `Mobile number ${duplicate.phone} is already registered under lead "${duplicate.lead.client_name}" in board "${duplicate.lead.board_name}".`
+      });
+    }
+
     // ── Insert lead ──
     const assignee = formConfig.defaultAssignee || null;
     const leadResult = await client.query(
