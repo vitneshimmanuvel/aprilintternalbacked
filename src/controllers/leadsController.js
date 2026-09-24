@@ -35,6 +35,31 @@ const buildFilterQuery = (query, baseQuery, params, userRole, userId, boardId) =
     paramIdx++;
   }
 
+  // Filter by lead creation / input date (l.created_at)
+  if (query.from_date && query.to_date) {
+    if (query.from_date === query.to_date) {
+      baseQuery += ` AND DATE(l.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') = $${paramIdx}`;
+      params.push(query.from_date);
+      paramIdx++;
+    } else {
+      baseQuery += ` AND DATE(l.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') BETWEEN $${paramIdx} AND $${paramIdx + 1}`;
+      params.push(query.from_date, query.to_date);
+      paramIdx += 2;
+    }
+  } else if (query.from_date) {
+    baseQuery += ` AND DATE(l.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') >= $${paramIdx}`;
+    params.push(query.from_date);
+    paramIdx++;
+  } else if (query.to_date) {
+    baseQuery += ` AND DATE(l.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') <= $${paramIdx}`;
+    params.push(query.to_date);
+    paramIdx++;
+  } else if (query.date) {
+    baseQuery += ` AND DATE(l.created_at AT TIME ZONE 'UTC' AT TIME ZONE 'Asia/Kolkata') = $${paramIdx}`;
+    params.push(query.date);
+    paramIdx++;
+  }
+
   return { sql: baseQuery, params };
 };
 
